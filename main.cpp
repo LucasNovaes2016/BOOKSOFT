@@ -82,16 +82,16 @@ public:
 	}
 
 };
-/*class Obra: public Produto{
+
+class Obra: public Produto{
 private:
-	string genero;
-	string editora;
+	string genero_;
+	string editora_;
 public:
-	Produto(string nome, int id, float preco, int quantidade) 
-	Obra
-	: Produto{string nome, int id, float preco, int quantidade}, genero{this->genero}, editora{this->editora}
+	Obra(string nome, int id, float preco, int quantidade, string genero, string editora) 
+	: Produto{nome, id, preco, quantidade}, genero_{genero}, editora_{editora}
 	{}
-}; */
+};
 int main(){
 	Produto liquidificador("valita",555,25.90,10);
 	cout << liquidificador.getNome();
