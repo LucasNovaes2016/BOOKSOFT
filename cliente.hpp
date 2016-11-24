@@ -22,6 +22,7 @@ Precisa de um número de cadastro, uma forma de registrar as compras
 1) Como Cliente herda de Pessoa_fisica e Pessoa_juridica, que 
 herdam de Pessoa, é preciso passar um objeto Pessoa para Cliente?
 2) é preciso por "using namespace std;" aqui tb?
-3)
+3)verificar o caso em que Cliente será OU Pessoa_fisica OU Pessoa_juridica
+
 
 */
