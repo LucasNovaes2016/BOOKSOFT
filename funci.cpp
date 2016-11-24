@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <vector>
 
 using namespace std;
 
@@ -239,9 +240,38 @@ public:
 	float const obterSalario() const {
 		return salario_;
 	}
+	void buscarProdutos();
+	void adicionarCliente();
 private:
 	Data dataContratacao_;
 	float salario_;
+};
+
+class Gerente : public Funcionario{
+public:
+	Gerente(Funcionario funcionario) :
+	Funcionario{funcionario}{}
+	Gerente(): Funcionario{}{}
+	void leiaGerente(){
+		Funcionario::leiaFuncionario()
+
+	}
+	void adicionarVendedor(Funcionario funcionario){
+		funcionario.leiaFuncionario();
+	};
+	void modificarVendedor();
+	void removerVendedor();
+	void adicionarProduto();
+	void modificarProduto();
+	void removerProduto();
+	void modificarCliente();
+	void removerCliente();
+private:
+	vector<Funcionario> listaFuncionarios;
+};
+
+class ListaProdutos{
+
 };
 
 int main(){
