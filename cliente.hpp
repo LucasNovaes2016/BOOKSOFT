@@ -7,7 +7,10 @@ public:
 	Cliente(Pessoa_fisica pf, Pessoa_juridica pj/*, exclusividades de clientes*/);
 	Cliente(); 
 private:
-
+/*Já tem nome, endereço, telefone, cpf/cnpj, rg/razão social
+Precisa de um número de cadastro, uma forma de registrar as compras
+ efeutadas,
+*/
 
 };
 
