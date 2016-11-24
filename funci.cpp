@@ -1,7 +1,6 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
-#include <vector>
 
 using namespace std;
 
@@ -216,6 +215,102 @@ private:
 	string razaosocial_;
 };
 
+/*class Obra
+{
+public:
+	Obra(string titulo, string genero) :
+	titulo_{titulo} , genero_{genero} {}
+	Obra(Obra const& o) : titulo_{o.titulo_} , genero_{o.genero_} {}
+	Obra = default();
+
+	void leiaObra()
+	{
+		cout << " Titulo: ";
+		getline(cin,titulo_);
+		cout << " Genero: "
+		getline(cin, genero_);
+	}
+
+	void mostrarObra()
+	{
+		cout << " Titulo: " << titulo_ << endl;
+		cout << " Genero: " << genero_ << endl;
+	}
+
+private:
+	string titulo_;
+	string genero_;
+
+};
+
+class Livro : public Obra
+{
+public:
+	Livro(Obra obra, string volume, string editora )
+	: Obra{obra} , volume_{volume} , editora_{editora} {}
+
+	void leiaLivro()
+	{
+		Obra::leiaObra();
+		cout << " Volume: ";
+		getline(cin, volume_);
+		cout << " Editora: ";
+		getline(cin, editora_);
+	}
+
+	void mostrarLivro()
+	{
+		Obra::mostrarObra();
+		cout << " Volume: " << volume_;
+		cout << " Editora: " << editora_;
+	}
+
+private:
+	string volume_;
+	string editora_;
+
+};
+
+class Revista : public Obra
+{
+public:
+	Revista(Obra obra, string edicao, string publicador) :
+	Obra{obra}, edicao_{edicao} , publicador_{publicador} {}
+	Revista() : Obra{} , edicao_{}, publicador_{} {}
+
+	void leiaRevista()
+	{
+		Obra::leiaObra();
+		cout << " Edicao: ";
+		getline(cin, edicao_);
+		cout << " Publicador: ";
+		getline(cin, publicador_);
+	}
+
+	void mostrarRevista()
+	{
+	
+	}
+
+
+private:
+	string edicao_;
+	string publicador_;
+
+};
+
+class Produto : public Livro, public Revista
+{
+public:
+
+
+private:
+	int id_;
+	int unidade_;
+	float preco_;
+
+};
+*/
 class Funcionario : public Pessoa_fisica{
 public:
 	Funcionario(Pessoa_fisica pessoa_f, Data dataContratacao, float salario) :
@@ -240,38 +335,9 @@ public:
 	float const obterSalario() const {
 		return salario_;
 	}
-	void buscarProdutos();
-	void adicionarCliente();
 private:
 	Data dataContratacao_;
 	float salario_;
-};
-
-class Gerente : public Funcionario{
-public:
-	Gerente(Funcionario funcionario) :
-	Funcionario{funcionario}{}
-	Gerente(): Funcionario{}{}
-	void leiaGerente(){
-		Funcionario::leiaFuncionario()
-
-	}
-	void adicionarVendedor(Funcionario funcionario){
-		funcionario.leiaFuncionario();
-	};
-	void modificarVendedor();
-	void removerVendedor();
-	void adicionarProduto();
-	void modificarProduto();
-	void removerProduto();
-	void modificarCliente();
-	void removerCliente();
-private:
-	vector<Funcionario> listaFuncionarios;
-};
-
-class ListaProdutos{
-
 };
 
 int main(){
