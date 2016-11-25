@@ -155,15 +155,118 @@ private:
 	Telefone telefone_;
 };
 
-class Pessoa_fisica : public Pessoa
+class Produto
+{
+public:
+	Produto(string produto_nome, int quantidade, float preco) :
+	produto_nome_{produto_nome} , quantidade_{quantidade}, preco_{preco} {}
+	Produto(Produto const& produto)
+	: produto_nome_{produto.produto_nome_}, preco_{produto.preco_}, quantidade_{produto.quantidade_} {}
+	Produto() = default;
+
+	void leiaProduto(){
+		cout << " Nome: ";
+		getline(cin,produto_nome_);
+		cout << " Quantidade: ";
+		cin >> quantidade_;
+		cout << " Preco: ";
+		cin >> preco_;
+	}
+
+	void mostreProduto(){
+		cout << " Nome: " << produto_nome_ << endl;
+		cout << " Quantidade: " << quantidade_ << endl;
+		cout << " Preco: R$ " << fixed << setprecision(2) << preco_ << endl;
+	}
+
+private:
+	string produto_nome_;
+	float preco_;
+	int quantidade_;
+};
+
+class Livro : public Produto
+{
+public:
+	Livro(Produto produto, string editora, string volume, string livro_genero ) :
+	Produto{produto}, editora_{editora}, volume_{volume} , livro_genero_{livro_genero} {}
+	Livro() : Produto{}, editora_{}, volume_{}, livro_genero_{} {}
+
+	void leiaLivro(){
+		Produto::leiaProduto();
+		cout << " Genero: ";
+		getline(cin, livro_genero_);
+		cout << " Volume: ";
+		getline(cin, volume_);
+		cout << " Editora: ";
+		getline(cin, editora_);
+	}
+
+	void mostreLivro(){
+		Produto::mostreProduto();
+		cout << " Genero: " << livro_genero_ << endl;
+		cout << " Volume: " << volume_ << endl;
+		cout << " Editora: " << editora_ << endl;
+	}
+
+private:
+	string editora_, volume_, livro_genero_;
+};
+
+class Revista : public Produto
+{
+public:
+	Revista(Produto produto, string edicao, string publicador, string revista_genero ) :
+	Produto{produto}, edicao_{edicao}, publicador_{publicador}, revista_genero_{revista_genero} {}
+	Revista() : Produto{}, edicao_{}, publicador_{}, revista_genero_{} {}
+
+	void leiaRevista(){
+		Produto::leiaProduto();
+		cout << " Genero: ";
+		getline(cin, revista_genero_);
+		cout << " Edicao: ";
+		getline(cin, edicao_);
+		cout << " Publicador: ";
+		getline(cin, publicador_);
+	}
+
+	void mostreRevista(){
+		Produto::mostreProduto();
+		cout << " Genero: " << revista_genero_ << endl;
+		cout << " Edicao: " << edicao_ << endl;
+		cout << " Publicador: " << publicador_ << endl;
+	}
+
+private:
+	string edicao_, publicador_, revista_genero_;
+};
+
+class Cliente : public Pessoa{
+public:
+	Cliente(Pessoa pessoa ) : Pessoa{pessoa} {}
+	Cliente() : Pessoa{} {}
+
+	void leiaCliente()
+	{
+		Pessoa::leiaPessoa();
+	}
+
+	void mostreCliente()
+	{
+		Pessoa::mostrePessoa();
+	}
+private:
+};
+
+class Cliente_fisico : public Cliente
 {	
 public:
-	Pessoa_fisica(Pessoa pessoa, CPF cpf, RG rg) :
-	Pessoa{pessoa}, cpf_{cpf}, rg_{rg} {}
-	Pessoa_fisica() : Pessoa{}, cpf_{}, rg_{} {}
+	Cliente_fisico(Cliente cliente, CPF cpf, RG rg) :
+	Cliente{cliente}, cpf_{cpf}, rg_{rg} {}
+	Cliente_fisico() : Cliente{}, cpf_{}, rg_{} {}
 
-	void leiaPessoa_F(){
-		Pessoa::leiaPessoa();
+	void leiaCliente_F(){
+		Cliente::leiaCliente();
 		cout << " CPF: " << endl;
 		cpf_.leiaCPF();
 		cout << " RG: " << endl;
@@ -171,7 +274,7 @@ public:
 	}
 
 	void mostrePessoa_F(){
-		Pessoa::mostrePessoa();
+		Cliente::mostreCliente();
 		cpf_.mostreCPF();
 		rg_.mostreRG();
 	}
@@ -185,23 +288,23 @@ private:
 	RG rg_;
 };
 
-class Pessoa_juridica : public Pessoa
+class Cliente_juridico : public Cliente
 {	
 public:
-	Pessoa_juridica(Pessoa pessoa, CNPJ cnpj, string razaosocial) :
-	Pessoa{pessoa}, cnpj_{cnpj}, razaosocial_{razaosocial} {}
-	Pessoa_juridica() : Pessoa{}, cnpj_{}, razaosocial_{} {}
+	Cliente_juridico(Cliente cliente, CNPJ cnpj, string razaosocial) :
+	Cliente{cliente}, cnpj_{cnpj}, razaosocial_{razaosocial} {}
+	Cliente_juridico() : Cliente{}, cnpj_{}, razaosocial_{} {}
 
-	void leiaPessoa_J(){
-		Pessoa::leiaPessoa();
+	void leiaCliente_J(){
+		Cliente::leiaCliente();
 		cout << " CNPJ: " << endl;
 		cnpj_.leiaCNPJ();
 		cout << " Razao Social: " << endl;
 		cin >> razaosocial_;
 	}
 
-	void mostrePessoa_J(){
-		Pessoa::mostrePessoa();
+	void mostreCliente_J(){
+		Cliente::mostreCliente();
 		cnpj_.mostreCNPJ();
 		cout << " Razao Social: " << razaosocial_ << endl;
 	}
@@ -215,110 +318,18 @@ private:
 	string razaosocial_;
 };
 
-/*class Obra
-{
+class Funcionario : public Pessoa{
 public:
-	Obra(string titulo, string genero) :
-	titulo_{titulo} , genero_{genero} {}
-	Obra(Obra const& o) : titulo_{o.titulo_} , genero_{o.genero_} {}
-	Obra = default();
-
-	void leiaObra()
-	{
-		cout << " Titulo: ";
-		getline(cin,titulo_);
-		cout << " Genero: "
-		getline(cin, genero_);
-	}
-
-	void mostrarObra()
-	{
-		cout << " Titulo: " << titulo_ << endl;
-		cout << " Genero: " << genero_ << endl;
-	}
-
-private:
-	string titulo_;
-	string genero_;
-
-};
-
-class Livro : public Obra
-{
-public:
-	Livro(Obra obra, string volume, string editora )
-	: Obra{obra} , volume_{volume} , editora_{editora} {}
-
-	void leiaLivro()
-	{
-		Obra::leiaObra();
-		cout << " Volume: ";
-		getline(cin, volume_);
-		cout << " Editora: ";
-		getline(cin, editora_);
-	}
-
-	void mostrarLivro()
-	{
-		Obra::mostrarObra();
-		cout << " Volume: " << volume_;
-		cout << " Editora: " << editora_;
-	}
-
-private:
-	string volume_;
-	string editora_;
-
-};
-
-class Revista : public Obra
-{
-public:
-	Revista(Obra obra, string edicao, string publicador) :
-	Obra{obra}, edicao_{edicao} , publicador_{publicador} {}
-	Revista() : Obra{} , edicao_{}, publicador_{} {}
-
-	void leiaRevista()
-	{
-		Obra::leiaObra();
-		cout << " Edicao: ";
-		getline(cin, edicao_);
-		cout << " Publicador: ";
-		getline(cin, publicador_);
-	}
-
-	void mostrarRevista()
-	{
-	
-	}
-
-
-private:
-	string edicao_;
-	string publicador_;
-
-};
-
-class Produto : public Livro, public Revista
-{
-public:
-
-
-private:
-	int id_;
-	int unidade_;
-	float preco_;
-
-};
-*/
-class Funcionario : public Pessoa_fisica{
-public:
-	Funcionario(Pessoa_fisica pessoa_f, Data dataContratacao, float salario) :
-	Pessoa_fisica{pessoa_f}, dataContratacao_{dataContratacao}, salario_{salario} {}
-	Funcionario() : Pessoa_fisica{}, dataContratacao_{}, salario_{0.0} {}
+	Funcionario(Pessoa pessoa, Data dataContratacao, float salario) :
+	Pessoa{pessoa}, dataContratacao_{dataContratacao}, salario_{salario} {}
+	Funcionario() : Pessoa{}, dataContratacao_{}, salario_{0.0} {}
 
 	void leiaFuncionario(){
-		Pessoa_fisica::leiaPessoa_F();
+		Pessoa::leiaPessoa();
+		cout << " CPF: " << endl;
+		cpf_.leiaCPF();
+		cout << " RG: " << endl;
+		rg_.leiaRG();
 		cout << " Data de Contratacao: " << endl;
 		dataContratacao_.leiaData();
 		cout << " Salario: ";
@@ -326,7 +337,9 @@ public:
 	}
 
 	void mostreFuncionario(){
-		Pessoa_fisica::mostrePessoa_F();
+		Pessoa::mostrePessoa();
+		cpf_.mostreCPF();
+		rg_.mostreRG();
 		cout << " Data de Contratacao: ";
 		dataContratacao_.mostreData();
 		cout << " Salario: R$ " << fixed << setprecision(2) << salario_ << endl;
@@ -335,7 +348,14 @@ public:
 	float const obterSalario() const {
 		return salario_;
 	}
+
+	CPF const& obterCPF() const{
+		return cpf_;
+	}
+
 private:
+	CPF cpf_;
+	RG rg_;
 	Data dataContratacao_;
 	float salario_;
 };
