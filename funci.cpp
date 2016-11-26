@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <iomanip>
+#include <fstream>
 
 using namespace std;
 
@@ -266,6 +267,7 @@ public:
 	Cliente_fisico() : Cliente{}, cpf_{}, rg_{} {}
 
 	void leiaCliente_F(){
+		cin.ignore();
 		Cliente::leiaCliente();
 		cout << " CPF: " << endl;
 		cpf_.leiaCPF();
@@ -296,6 +298,7 @@ public:
 	Cliente_juridico() : Cliente{}, cnpj_{}, razaosocial_{} {}
 
 	void leiaCliente_J(){
+		cin.ignore();
 		Cliente::leiaCliente();
 		cout << " CNPJ: " << endl;
 		cnpj_.leiaCNPJ();
@@ -360,10 +363,186 @@ private:
 	float salario_;
 };
 
+class Lista_Cliente{
+	struct Noh
+	{
+		Cliente cliente_;
+		Noh *prox_;
+	};
+public:
+	Lista_Cliente(){
+		cabeca_ = NULL;
+		tamanho_ = 0;
+	}
+
+	void adicionarCliente(Cliente_fisico c)
+	{
+		Noh *n = new Noh();
+		n->cliente_ = c;
+		n-> prox_ = cabeca_;
+
+		cabeca_ = n;
+		tamanho_++;
+	}
+
+	void adicionarCliente(Cliente_juridico c)
+	{
+		Noh *n = new Noh();
+		n->cliente_ = c;
+		n->prox_ = cabeca_;
+
+		cabeca_ = n;
+		tamanho_++;
+	}
+
+	void mostrarLista_Cliente()
+	{
+		if(tamanho_ > 0)
+        {
+            Noh *temp;
+            temp = cabeca_;
+            while(temp!=NULL)
+            {
+                temp->cliente_.mostreCliente();
+                temp=temp->prox_;
+            }
+        }
+        else
+        {
+            cout << "Não tem clientes cadastrados!" << endl;
+        }
+	}
+
+private:
+	Noh *cabeca_;
+	int tamanho_;
+};
+
+class Login
+{
+public:
+	Login(string usuario, string senha) :
+	usuario_{usuario}, senha_{senha} {}
+	Login() : usuario_{}, senha_{} {}
+
+	void leiaLogin()
+	{
+		cout << " Digite o nome de usuario: ";
+		getline(cin, usuario_);
+		cout << " Digite a senha: ";
+		getline(cin, senha_);
+	}
+
+	void mostreLogin()
+	{
+		cout << " Usuario: " << usuario_ << endl;
+		cout << " Senha: " << senha_ << endl;
+	}
+private:
+	string usuario_;
+	string senha_;
+};
+
+class Lista_Login{
+	struct Noh
+	{
+		Login login_;
+		Noh *prox_;
+	};
+public:
+	Lista_Login(){
+		cabeca_ = NULL;
+		tamanho_ = 0;
+	}
+
+	void adicionarLogin(Login l)
+	{
+		Noh *n = new Noh();
+		n->login_ = l;
+		n-> prox_ = cabeca_;
+
+		cabeca_ = n;
+		tamanho_++;
+	}
+
+	void mostrarLista_Login()
+	{
+		if(tamanho_ > 0)
+        {
+            Noh *temp;
+            temp = cabeca_;
+            while(temp!=NULL)
+            {
+                temp->login_.mostreLogin();
+                temp=temp->prox_;
+            }
+        }
+        else
+        {
+            cout << "Não tem logins cadastrados!" << endl;
+        }
+	}
+
+	int tamanhoLista()
+	{
+		return tamanho_;	
+	}
+
+private:
+	Noh *cabeca_;
+	int tamanho_;
+};
+
+class Livraria{
+public:
+	Livraria() : listLogin_{} {}
+
+	void preencherLogin()
+	{
+		string usuario, senha;
+		ifstream infile;
+        infile.open("usuarios.txt");
+        while(!infile.eof()) 
+        {
+        	getline(infile,usuario);
+        	getline(infile,senha);
+
+        	size_t pos_usuario = usuario.find(": ");
+        	size_t pos_senha = senha.find(": ");
+
+        	usuario = usuario.substr(pos_usuario + 2);
+        	senha = senha.substr(pos_senha + 2);
+
+        	Login text_login(usuario,senha);
+        	listLogin_.adicionarLogin(text_login);
+        }
+
+        infile.close();
+
+	}
+
+	void mostrarLogin()
+	{
+		listLogin_.mostrarLista_Login();
+	}
+
+	void cadastrarLogin()
+	{
+		Login novo_login;
+		novo_login.leiaLogin();
+		listLogin_.adicionarLogin(novo_login);
+	}
+
+	void fecharLogin()
+	{
+
+	}
+private:
+	Lista_Login listLogin_;
+};
+
 int main(){
-	Funcionario f;
-	f.leiaFuncionario();
-	cout << endl;
-	f.mostreFuncionario();
-	cout << endl;
+	Livraria saraiva;
+	saraiva.preencherLogin();
+	saraiva.mostrarLogin();
 }
