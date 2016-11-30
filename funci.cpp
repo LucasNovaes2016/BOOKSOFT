@@ -149,6 +149,9 @@ public:
 		endereco_.mostreEndereco();
 		telefone_.mostreTelefone();
 	}
+	cinNome(){
+		cin >> nome_;
+	}
 
 private:
 	string nome_;
@@ -218,7 +221,7 @@ private:
 
 class Funcionario : public Pessoa_fisica{
 public:
-	Funcionario(Pessoa_fisica pessoa_f, Data dataContratacao, float salario) :
+_	Funcionario(Pessoa_fisica pessoa_f, Data dataContratacao, float salario) :
 	Pessoa_fisica{pessoa_f}, dataContratacao_{dataContratacao}, salario_{salario} {}
 	Funcionario() : Pessoa_fisica{}, dataContratacao_{}, salario_{0.0} {}
 
@@ -259,7 +262,13 @@ public:
 	void adicionarVendedor(Funcionario funcionario){
 		funcionario.leiaFuncionario();
 	};
-	void modificarVendedor();
+	void modificarVendedor(Funcionario funci){
+		cout <<"O que você gostaria de alterar?";
+		cout<<"1 para nome\n2 endereco\n3 CPF";
+		if(var == 1){
+			cout<<"digite o novo nome:";
+			funci.pessoa_f.pessoa.cinNome();
+		}
 	void removerVendedor();
 	void adicionarProduto();
 	void modificarProduto();
