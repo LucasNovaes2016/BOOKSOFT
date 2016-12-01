@@ -1682,10 +1682,14 @@ private:
 
 int main(){
 
+/** @Criação de um novo gerente */
+	
 	Gerente g;
 
 	g.inicializarFuncionarios();
-
+	
+/** @Cadastramento de novos funcionários */
+	
 	g.mostrarCadastroFuncionarios();
 
 };
