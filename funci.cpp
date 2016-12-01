@@ -492,19 +492,30 @@ class Produto
 {
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Produto é utilizado para instanciar um objeto Produto.
+	 * @param	produto_nome Nome do produto.
+	 * @param	quantidade Quantidade de produtos.
+	 * @param	preco Preço do produto.
+	 */
 	Produto(string produto_nome, int quantidade, float preco) :
 
 	produto_nome_{produto_nome} , quantidade_{quantidade}, preco_{preco} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	produto Objeto do tipo Produto.
+	 */
 	Produto(Produto const& produto)
 
 	: produto_nome_{produto.produto_nome_}, preco_{produto.preco_}, quantidade_{produto.quantidade_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Produto() = default;
-
-
-
+	
+	/**
+	 * @details Método de leitura do objeto Produto.
+ 	*/
 	void leiaProduto(){
 
 		cout << " Nome: ";
@@ -521,8 +532,9 @@ public:
 
 	}
 
-
-
+	/**
+	 * @details Método de escrita do objeto Produto.
+ 	*/
 	void mostreProduto(){
 
 		cout << " Nome: " << produto_nome_ << endl;
@@ -533,12 +545,17 @@ public:
 
 	}
 
-
-
+	/**
+	 * @return Nome do produto.
+ 	*/
 	string getProdutoNome() {return produto_nome_;}
-
+	/**
+	 * @return Preço do produto.
+ 	*/
 	float getPreco() {return preco_;}
-
+	/**
+	 * @return Quantidade do produto.
+ 	*/
 	int getQuantidade() {return quantidade_;}
 
 
@@ -560,7 +577,13 @@ class Livro : public Produto
 {
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Livro é utilizado para instanciar um objeto Livro.
+	 * @param	produto Objeto do tipo Produto.
+	 * @param	editora Nome da editora.
+	 * @param	volume Volume da edição.
+	 * @param	livro_genero Gênero do livro.
+	 */
 	Livro(Produto produto, string editora, string volume, string livro_genero ) :
 
 	Produto{produto}, editora_{editora}, volume_{volume} , livro_genero_{livro_genero} {}
@@ -568,7 +591,9 @@ public:
 	Livro() : Produto{}, editora_{}, volume_{}, livro_genero_{} {}
 
 
-
+	/**
+	 * @details Método de leitura do objeto Livro.
+ 	*/
 	void leiaLivro(){
 
 		Produto::leiaProduto();
