@@ -18,9 +18,10 @@
 #include <sstream>
 
 using namespace std;
-
-
-
+/**
+ * @details	Função responsável pela transformação de String para float. Será usada para transformar dados float que serão armazenados em String.
+ * @param	s String que será transformada em float
+ */
 float toFloat(string s) {
 
   float r = 0;
@@ -36,17 +37,17 @@ float toFloat(string s) {
 class Data{
 
 public:
-/**
- * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data.
- * @param	dia Dia
- * @param	mes Mês
- * @param	ano Ano
- */
+	/**
+	 * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data.
+	 * @param	dia Dia
+	 * @param	mes Mês
+	 * @param	ano Ano
+	 */
 	Data(int dia, int mes, int ano) : dia_{dia}, mes_{mes}, ano_{ano} {}
 
 	Data(Data const& d) : dia_{d.dia_}, mes_{d.mes_}, ano_{d.ano_} {}
 	
-	/** @brief Construtor padrão */
+
 	Data() = default;
 
 
@@ -295,14 +296,13 @@ private:
 class Endereco{
 
 public:
-/**
- * @details O construtor parametrizado da classe Endereço é utilizado para instanciar um objeto Endereço.
- * @param	string numero
- * @param	string rua
- * @param	string bairro
- * @param	string cep
- */
-
+	/**
+	 * @details O construtor parametrizado da classe Endereço é utilizado para instanciar um objeto Endereço.
+	 * @param	string numero
+	 * @param	string rua
+	 * @param	string bairro
+	 * @param	string cep
+	 */
 	Endereco(string numero, string rua, string bairro, string cep) : numero_{numero}, rua_{rua}, bairro_{bairro}, cep_{cep} {}
 
 	Endereco(Endereco const& e) : numero_{e.numero_}, rua_{e.rua_}, bairro_{e.bairro_}, cep_{e.cep_} {}
