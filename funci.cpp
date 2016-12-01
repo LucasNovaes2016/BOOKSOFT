@@ -302,15 +302,25 @@ private:
 class Telefone{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Telefone é utilizado para instanciar um objeto Telefone.
+	 * @param	tel Número do Telefone.
+	 */
 	Telefone(string tel) : tel_{tel} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	t Objeto do tipo Telefone.
+	 */
 	Telefone(Telefone const& t) : tel_{t.tel_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Telefone() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto Telefone.
+ 	*/
 	void leiaTelefone(){
 
 		cout << " Informe Telefone: ";
@@ -320,7 +330,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de impressão do objeto Telefone.
+ 	*/
 	void mostreTelefone() { cout << " Telefone: " << tel_ << endl; }
 
 private:
@@ -342,13 +354,20 @@ public:
 	 * @param	string cep
 	 */
 	Endereco(string numero, string rua, string bairro, string cep) : numero_{numero}, rua_{rua}, bairro_{bairro}, cep_{cep} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	e Objeto do tipo Endereco.
+	 */
 	Endereco(Endereco const& e) : numero_{e.numero_}, rua_{e.rua_}, bairro_{e.bairro_}, cep_{e.cep_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Endereco() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto Endereco. Tratamento de exceção para manter o CEP com 8 dígitos.
+ 	*/
 	void leiaEndereco() {
 
 		cout << " Número: ";
@@ -375,7 +394,9 @@ public:
 			cout<<"erro, o numero de CEP deve conter 8 digitos, erro numero "<< e <<;
 		}
 	}
-
+	/**
+	 * @details Método de impressão do objeto Endereco.
+ 	*/
 	void mostreEndereco() { cout << rua_ << " , Nº " << numero_ << "\n Bairro:  " << bairro_  << ", " << cep_ << endl; }
 
 
@@ -399,19 +420,31 @@ private:
 class Pessoa{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Pessoa é utilizado para instanciar um objeto Pessoa.
+	 * @param	nome Nome da pessoa.
+	 * @param	endereco Endereço da pessoa.
+	 * @param	telefone Telefone da pessoa.	 
+	 */
 	Pessoa(string nome, Endereco endereco, Telefone telefone)
 
 	: nome_{nome}, endereco_{endereco}, telefone_{telefone} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	p Objeto do tipo Pessoa.
+	 */
 	Pessoa(Pessoa const& p)
 
 	: nome_{p.nome_}, endereco_{p.endereco_}, telefone_{p.telefone_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Pessoa() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto Pessoa.
+ 	*/
 	void leiaPessoa(){
 
 		cout << "Nome: ";
@@ -427,9 +460,9 @@ public:
 		telefone_.leiaTelefone();
 
 	}
-
-
-
+	/**
+	 * @details Método de escrita do objeto Pessoa.
+ 	*/
 	void mostrePessoa(){
 
 		cout << " Nome: " << nome_ << "\n Endereco: ";
