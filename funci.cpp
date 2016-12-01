@@ -1675,9 +1675,6 @@ private:
 
 };
 
-
-/** @Inicio da função main */
-
 int main(){
 
 /** @Criação de um novo gerente */
@@ -1686,7 +1683,7 @@ int main(){
 
 	g.inicializarFuncionarios();
 	
-/** @Cadastro de novos funcionários */
+	/** @Cadastro de novos funcionários */
 	
 	g.mostrarCadastroFuncionarios();
 
