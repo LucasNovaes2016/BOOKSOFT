@@ -11,18 +11,11 @@
  */
 
 #include <iostream>
-
 #include <string>
-
 #include <iomanip>
-
 #include <fstream>
-
 #include <deque>
-
 #include <sstream>
-
-
 
 using namespace std;
 
@@ -44,7 +37,7 @@ class Data{
 
 public:
 /**
- * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data
+ * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data.
  * @param	dia Dia
  * @param	mes Mês
  * @param	ano Ano
@@ -57,7 +50,9 @@ public:
 	Data() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto Data (dia, mês e ano) com tratamento de exceções.
+ 	*/
 	void leiaData() {
 
 		cout << " Dia: ";
@@ -96,18 +91,20 @@ public:
 		}
 
 	}
-
+	/**
+	 * @details Método de impressão do objeto Data.
+ 	*/
 	void mostreData() { cout << dia_ << "/" << mes_ << "/" << ano_ << endl; }
 
 
 
 private:
 
-	int dia_;
+	int dia_; /**< Dia */
 
-	int mes_;
+	int mes_; /**< Mês */
 
-	int ano_;
+	int ano_; /**< Ano */
 
 };
 
@@ -153,7 +150,7 @@ public:
 
 private:
 
-	string cpf_;
+	string cpf_; /**< CPF */
 
 };
 
@@ -200,7 +197,7 @@ public:
 
 private:
 
-	string cnpj_;
+	string cnpj_; /**< CNPJ */
 
 };
 
@@ -257,7 +254,7 @@ public:
 
 private:
 
-	string rg_;
+	string rg_; /**< RG */
 
 };
 
@@ -289,7 +286,7 @@ public:
 
 private:
 
-	string tel_;
+	string tel_; /**< Telefone */
 
 };
 
@@ -298,13 +295,6 @@ private:
 class Endereco{
 
 public:
-/**
- * @details O construtor parametrizado da classe Endereco é utilizado para instanciar um objeto endereço 
- * @param	string numero
- * @param	string rua
- * @param	string bairro
- * @param	string cep
- */
 
 	Endereco(string numero, string rua, string bairro, string cep) : numero_{numero}, rua_{rua}, bairro_{bairro}, cep_{cep} {}
 
@@ -347,13 +337,13 @@ public:
 
 private:
 
-	string numero_;
+	string numero_; /**< Número da casa */
 
-	string rua_;
+	string rua_; /**< Rua */
 
-	string bairro_;
+	string bairro_; /**< Bairro */
 
-	string cep_;
+	string cep_; /**< CEP */
 
 };
 
@@ -409,11 +399,11 @@ public:
 
 private:
 
-	string nome_;
+	string nome_; /**< Nome da pessoa */
 
-	Endereco endereco_;
+	Endereco endereco_; /**< Endereço */
 
-	Telefone telefone_;
+	Telefone telefone_; /**< Telefone */
 
 };
 
@@ -477,11 +467,11 @@ public:
 
 private:
 
-	string produto_nome_;
+	string produto_nome_; /**< Nome do produto */
 
-	float preco_;
+	float preco_; /**< Preço */
 
-	int quantidade_;
+	int quantidade_; /**< Quantidade do produto */
 
 };
 
@@ -537,7 +527,9 @@ public:
 
 private:
 
-	string editora_, volume_, livro_genero_;
+	string editora_; /**< Editora */
+	string volume_; /**< Volume */
+	string livro_genero_; /**< Gênero */
 
 };
 
@@ -593,7 +585,9 @@ public:
 
 private:
 
-	string edicao_, publicador_, revista_genero_;
+	string edicao_; /**< Edição da revista */
+	string publicador_; /**< Empresa resposável pela publicação da revista */
+	string revista_genero_; /**< Gênero da revista */
 
 };
 
@@ -687,9 +681,9 @@ public:
 
 private:
 
-	CPF cpf_;
+	CPF cpf_; /**< CPF */
 
-	RG rg_;
+	RG rg_; /**< RG */
 
 };
 
@@ -749,9 +743,9 @@ public:
 
 private:
 
-	CNPJ cnpj_;
+	CNPJ cnpj_; /**< CNPJ */
 
-	string razaosocial_;
+	string razaosocial_; /**< Razão Social */
 
 };
 
@@ -829,13 +823,13 @@ public:
 
 private:
 
-	CPF cpf_;
+	CPF cpf_; /**< CPF */
 
-	RG rg_;
+	RG rg_; /**< RG */
 
-	Data dataContratacao_;
+	Data dataContratacao_; /**< Data da contratação */
 
-	float salario_;
+	float salario_; /**< Salário */
 
 };
 
@@ -1669,9 +1663,9 @@ public:
 
 private:
 
-	deque<Produto> stockProdutos_;
+	deque<Produto> stockProdutos_; /**< Deque para armazenar os objetos Produtos */
 
-	deque<Cliente_fisico> cadastroClienteF_;
+	deque<Cliente_fisico> cadastroClienteF_; 
 
 	deque<Cliente_juridico> cadastroClienteJ_;
 
