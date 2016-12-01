@@ -1792,7 +1792,11 @@ public:
 	}
 
 
-
+	/**
+	 * @details Recebe uma string contendo um CPF e retorna os dados do Funcionário, caso encontre.
+	 * @param str_cpf String com o CPF
+	 * @return i
+	*/
 	int buscarFuncionario(string str_cpf)
 
 	{
@@ -1824,7 +1828,11 @@ public:
 	}
 
 
-
+	/**
+	 * @details Recebe uma string contendo o nome de um produto e retorna a posição do produto, caso encontre. Caso contrário, imprime uma mensagem.
+	 * @param str_nome String com o nome do produto.
+	 * @return i Posição do produto.
+	*/
 	int buscarProduto(string str_nome)
 
 	{
@@ -1877,28 +1885,23 @@ public:
 
 private:
 
-	deque<Produto> stockProdutos_; /**< Deque para armazenar os objetos Produtos */
+	deque<Produto> stockProdutos_; /**< Deque para armazenar os objetos Produtos. */
 
-	deque<Cliente_fisico> cadastroClienteF_; 
+	deque<Cliente_fisico> cadastroClienteF_; /**< Deque para armazenar os objetos Cliente Físico. */
 
-	deque<Cliente_juridico> cadastroClienteJ_;
+	deque<Cliente_juridico> cadastroClienteJ_; /**< Deque para armazenar os objetos Cliente Jurídico. */
 
-	deque<Funcionario> cadastroFuncionario_;
+	deque<Funcionario> cadastroFuncionario_; /**< Deque para armazenar os objetos Funcionário. */
 
 
 
 };
 
 int main(){
-
-/** @Criação de um novo gerente */
 	
 	Gerente g;
 
-	g.inicializarFuncionarios();
-	
-	/** @Cadastro de novos funcionários */
-	
+	g.inicializarFuncionarios();	
 	g.mostrarCadastroFuncionarios();
 
 };
