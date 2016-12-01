@@ -43,7 +43,11 @@ float toFloat(string s) {
 
 
 
-
+/** 
+ * @class 	Data animal.h
+ * @brief 	Classe que a data
+ * @details 	Os atributos de Data são três: dia, mês e ano
+ */
 class Data{
 
 public:
