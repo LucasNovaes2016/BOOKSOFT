@@ -964,7 +964,9 @@ public:
 	}
 
 
-	
+	/**
+	 * @return Valor do salário do funcionário.
+ 	*/
 	float const obterSalario() const {
 
 		return salario_;
@@ -972,7 +974,9 @@ public:
 	}
 
 
-
+	/**
+	 * @return Número do CPF do funcionário.
+ 	*/
 	CPF const& obterCPF() const{
 
 		return cpf_;
@@ -1000,13 +1004,21 @@ class Gerente : public Funcionario
 {
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Gerente é utilizado para instanciar um objeto Gerente.
+	 * @param	funcionario Objeto do tipo Funcionario.
+	 */
 	Gerente(Funcionario funcionario) : Funcionario{funcionario} {}
-
+	
+	/**
+	 * @details 	Construtor padrão.
+	 */
 	Gerente() : Funcionario{} {}
 
 
-
+	/**
+	 * @details Método de leitura do objeto Gerente. 
+	*/
 	void leiaGerente(){
 
 		Funcionario::leiaFuncionario();
@@ -1014,7 +1026,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de escrita do objeto Gerente. 
+	*/
 	void mostreGerente(){
 
 		Funcionario::mostreFuncionario();
@@ -1022,7 +1036,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método responsável pela leitura dos objetos Produto (de arquivos ".txt" que foram utilizados como "banco de dados") e conversão dos atributos para seus respectivos tipos.  
+	*/
 	void inicializarProdutos()
 
 	{
@@ -1220,7 +1236,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método responsável pela leitura dos objetos Funcionario (de arquivos ".txt" que foram utilizados como "banco de dados") e conversão dos atributos para seus respectivos tipos.  
+	*/
 	void inicializarFuncionarios()
 
 	{
@@ -1364,7 +1382,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método responsável pela leitura dos objetos Cliente (de arquivos ".txt" que foram utilizados como "banco de dados") e conversão dos atributos para seus respectivos tipos.  
+	*/
 	void inicializarClientesF()
 
 	{
@@ -1460,7 +1480,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de leitura dos objetos do tipo Cliente Físico. São impressos todos os objetos armazenados no vetor "cadastroClienteF_".
+	*/
 	void mostrarCadastroClientesF()
 
 	{
@@ -1482,7 +1504,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de leitura dos objetos do tipo Cliente Jurídico. São impressos todos os objetos armazenados no vetor "cadastroClienteJ_".
+	*/
 	void mostrarCadastroClientesJ()
 
 	{
@@ -1504,7 +1528,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de leitura dos objetos do tipo Produto. São impressos todos os objetos armazenados no vetor "stockProdutos_".
+	*/
 	void mostrarCadastroProdutos()
 
 	{
@@ -1526,7 +1552,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de leitura dos objetos do tipo Funcionario. São impressos todos os objetos armazenados no vetor "cadastroFuncionario_".
+	*/
 	void mostrarCadastroFuncionarios()
 
 	{
@@ -1546,7 +1574,9 @@ public:
 		}
 
 	}
-
+	/**
+	 * @details Método para seleção de adição de um novo Objeto do tipo Cliente: invoca "adicionarClienteF" ou "adicionarClienteJ".
+	*/
 	void adicionarCliente()
 
 	{
@@ -1572,7 +1602,9 @@ public:
 		cout << endl;
 
 	}
-
+	/**
+	 * @details Método  de adição de um novo Objeto do Cliente Físico. 
+	*/
 	void adicionarClienteF()
 
 	{
@@ -1584,7 +1616,9 @@ public:
 		cadastroClienteF_.push_back(cf);
 
 	}
-
+	/**
+	 * @details Método  de adição de um novo Objeto do Cliente Jurídico. 
+	*/
 	void adicionarClienteJ()
 
 	{
@@ -1596,7 +1630,10 @@ public:
 		cadastroClienteJ_.push_back(cj);
 
 	}
-
+	
+	/**
+	 * @details Método de adição de um novo Objeto do Funcionário. 
+	*/
 	void adicionarFuncionario() 
 
 	{
@@ -1608,7 +1645,10 @@ public:
 		cadastroFuncionario_.push_back(f);
 
 	}
-
+	
+	/**
+	 * @details Método para seleção da adição de um novo Objeto do tipo Produto: invoca "adicionarLivro" ou "adicionarRevista" ou "adicionarDiverso".
+	*/
 	void adicionarProduto()
 
 	{
@@ -1636,7 +1676,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método da adição de um Objeto Livro.
+	*/
 	void adicionarLivro()
 
 	{
@@ -1648,7 +1690,9 @@ public:
 		stockProdutos_.push_back(l);
 
 	}
-
+	/**
+	 * @details Método da adição de um Objeto Revista.
+	*/
 	void adicionarRevista()
 
 	{
@@ -1660,7 +1704,9 @@ public:
 		stockProdutos_.push_back(r);
 
 	}
-
+	/**
+	 * @details Método da adição de um Objeto Diverso.
+	*/
 	void adicionarDiverso()
 
 	{
@@ -1674,7 +1720,11 @@ public:
 	}
 
 
-
+	/**
+	 * @details Recebe uma string contendo o CPF e retorna os dados do Cliente Físico, caso encontre.
+	 * @param str_cpf String com o CPF
+	 * @return i
+	*/
 	int buscarClienteF(string str_cpf)
 
 	{
@@ -1706,7 +1756,11 @@ public:
 	}
 
 
-
+	/**
+	 * @details Recebe uma string contendo o CNPJ e retorna os dados do Cliente Jurídico, caso encontre.
+	 * @param str_cpf String com o CPF
+	 * @return i
+	*/
 	int buscarClienteJ(string str_cnpj)
 
 	{
