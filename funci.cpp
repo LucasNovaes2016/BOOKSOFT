@@ -1,3 +1,15 @@
+/**
+ * @file	main.cpp
+ * @brief	Cógido fonte principal do Projeto BookSoft da disciplina LP
+ * @author	Leonardo Dias, Lucas Novaes, Renan Kimura, Yuri Ferreira
+ * @since	27/10/2016
+ * @date	01/12/2016
+ * @sa		clientes.hpp
+ * @sa		funcionarios.hpp
+ * @sa		vendedor.hpp
+ *@sa		produtos.hpp
+ */
+
 #include <iostream>
 
 #include <string>
