@@ -295,6 +295,13 @@ private:
 class Endereco{
 
 public:
+/**
+ * @details O construtor parametrizado da classe Endereço é utilizado para instanciar um objeto Endereço.
+ * @param	string numero
+ * @param	string rua
+ * @param	string bairro
+ * @param	string cep
+ */
 
 	Endereco(string numero, string rua, string bairro, string cep) : numero_{numero}, rua_{rua}, bairro_{bairro}, cep_{cep} {}
 
