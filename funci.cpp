@@ -613,7 +613,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de escrita do objeto Livro. 
+ 	*/
 	void mostreLivro(){
 
 		Produto::mostreProduto();
@@ -643,15 +645,25 @@ class Revista : public Produto
 {
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Revista é utilizado para instanciar um objeto Revista.
+	 * @param	produto Objeto do tipo Produto.
+	 * @param	edicao Edição do produto.
+	 * @param	publicador Empresa responsável pela publicação.
+	 * @param	revista_genero Gênero da revista.
+	 */
 	Revista(Produto produto, string edicao, string publicador, string revista_genero ) :
 
 	Produto{produto}, edicao_{edicao}, publicador_{publicador}, revista_genero_{revista_genero} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Revista() : Produto{}, edicao_{}, publicador_{}, revista_genero_{} {}
 
 
-
+	/**
+	 * @details Método de leitura do objeto Revista. 
+ 	*/
 	void leiaRevista(){
 
 		Produto::leiaProduto();
@@ -671,7 +683,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de impressão do objeto Revista. 
+ 	*/
 	void mostreRevista(){
 
 		Produto::mostreProduto();
@@ -699,13 +713,21 @@ private:
 class Cliente : public Pessoa{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Cliente é utilizado para instanciar um objeto Cliente.
+	 * @param	pessoa Objeto do tipo Pessoa.
+	 */
 	Cliente(Pessoa pessoa ) : Pessoa{pessoa} {}
-
+	
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Cliente() : Pessoa{} {}
 
 
-
+	/**
+	 * @details Método de leitura do objeto Cliente. 
+ 	*/
 	void leiaCliente()
 
 	{
@@ -715,7 +737,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de impressão do objeto Cliente. 
+ 	*/
 	void mostreCliente()
 
 	{
@@ -735,15 +759,25 @@ class Cliente_fisico : public Cliente
 {	
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Cliente_fisico é utilizado para instanciar um objeto Cliente Físico.
+	 * @param	cliente Objeto do tipo Cliente.
+	 * @param	cpf Objeto do tipo CPF.
+	 * @param	rg Objeto do tipo RG.
+	 */
 	Cliente_fisico(Cliente cliente, CPF cpf, RG rg) :
 
 	Cliente{cliente}, cpf_{cpf}, rg_{rg} {}
-
+	
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Cliente_fisico() : Cliente{}, cpf_{}, rg_{} {}
 
 
-
+	/**
+	 * @details Método de leitura do objeto Cliente_fisico. 
+	*/
 	void leiaCliente_F(){
 
 		cin.ignore();
@@ -761,7 +795,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de impressão do objeto Cliente_fisico. 
+	*/
 	void mostreCliente_F(){
 
 		Cliente::mostreCliente();
@@ -797,15 +833,24 @@ class Cliente_juridico : public Cliente
 {	
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Cliente_juridico é utilizado para instanciar um objeto Cliente Jurídico.
+	 * @param	cliente Objeto do tipo Cliente.
+	 * @param	cnpj Objeto do tipo CNPJ.
+	 * @param	razaosocial Nome da razão social.
+	 */
 	Cliente_juridico(Cliente cliente, CNPJ cnpj, string razaosocial) :
 
 	Cliente{cliente}, cnpj_{cnpj}, razaosocial_{razaosocial} {}
-
+	
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Cliente_juridico() : Cliente{}, cnpj_{}, razaosocial_{} {}
 
-
-
+	/**
+	 * @details Método de leitura do objeto Cliente_juridico. 
+	*/
 	void leiaCliente_J(){
 
 		cin.ignore();
@@ -822,8 +867,9 @@ public:
 
 	}
 
-
-
+	/**
+	 * @details Método de escrita do objeto Cliente_juridico. 
+	*/
 	void mostreCliente_J(){
 
 		Cliente::mostreCliente();
@@ -857,15 +903,24 @@ private:
 class Funcionario : public Pessoa{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Funcionario é utilizado para instanciar um objeto Funcionario.
+	 * @param	pessoa Objeto do tipo Pessoa.
+	 * @param	cpf Objeto do tipo CPF.
+	 * @param	rg Objeto do tipo RG.
+	 * @param	dataContratacao Objeto do tipo Data, contem a data da contratação.
+	 * @param	salario Valor do salário.
+	 */
 	Funcionario(Pessoa pessoa, CPF cpf, RG rg, Data dataContratacao, float salario) :
 
 	Pessoa{pessoa}, cpf_{cpf}, rg_{rg} ,dataContratacao_{dataContratacao}, salario_{salario} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	Funcionario() : Pessoa{}, cpf_{}, rg_{}, dataContratacao_{}, salario_{0.0} {}
-
-
-
+	/**
+	 * @details Método de leitura do objeto Funcionario. 
+	*/
 	void leiaFuncionario(){
 
 		Pessoa::leiaPessoa();
@@ -889,7 +944,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de escrita do objeto Funcionario. 
+	*/
 	void mostreFuncionario(){
 
 		Pessoa::mostrePessoa();
@@ -907,7 +964,7 @@ public:
 	}
 
 
-
+	
 	float const obterSalario() const {
 
 		return salario_;
