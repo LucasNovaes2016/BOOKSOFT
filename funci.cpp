@@ -40,18 +40,15 @@ float toFloat(string s) {
 
 }
 
-
-
-
-/** 
- * @class 	Data animal.h
- * @brief 	Classe que a data
- * @details 	Os atributos de Data são três: dia, mês e ano
- */
 class Data{
 
 public:
-	/** @brief Construtor parametrizado */
+/**
+ * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data
+ * @param	dia Dia
+ * @param	mes Mês
+ * @param	ano Ano
+ */
 	Data(int dia, int mes, int ano) : dia_{dia}, mes_{mes}, ano_{ano} {}
 
 	Data(Data const& d) : dia_{d.dia_}, mes_{d.mes_}, ano_{d.ano_} {}
@@ -1682,14 +1679,10 @@ private:
 
 int main(){
 
-/** @Criação de um novo gerente */
-	
 	Gerente g;
 
 	g.inicializarFuncionarios();
-	
-/** @Cadastramento de novos funcionários */
-	
+
 	g.mostrarCadastroFuncionarios();
 
 };
