@@ -1,3 +1,10 @@
+/**
+ * @file	main.cpp
+ * @brief	Definicao de prototipos de classes referentes aos produtos
+ * @author	Leonardo Dias, Lucas Novaes, Renan Kimura, Yuri Ferreira
+ * @since	27/10/2016
+ * @date	01/12/2016
+ */
 #ifndef PRODUTOS_H_INCLUDED
 #define PRODUTOS_H_INCLUDED
 
