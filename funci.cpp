@@ -47,11 +47,12 @@ float toFloat(string s) {
 class Data{
 
 public:
-
+	/** @brief Construtor parametrizado */
 	Data(int dia, int mes, int ano) : dia_{dia}, mes_{mes}, ano_{ano} {}
 
 	Data(Data const& d) : dia_{d.dia_}, mes_{d.mes_}, ano_{d.ano_} {}
-
+	
+	/** @brief Construtor padrão */
 	Data() = default;
 
 
