@@ -7,7 +7,7 @@
  * @sa		clientes.hpp
  * @sa		funcionarios.hpp
  * @sa		vendedor.hpp
- *@sa		produtos.hpp
+ * @sa		produtos.hpp
  */
 
 #include <iostream>
