@@ -2,8 +2,18 @@
 #include <string>
 #include <iomanip>
 #include <fstream>
+#include <deque>
+#include <sstream>
 
 using namespace std;
+
+float toFloat(string s) {
+  float r = 0;
+  istringstream ss(s);
+  ss >> r;
+  return r;
+}
+
 
 class Data{
 public:
@@ -67,6 +77,10 @@ private:
 
 bool operator==(CPF const& cpf1, CPF const& cpf2){
 	return cpf1.obterCPF() == cpf2.obterCPF();
+}
+
+bool operator==(CNPJ const& cnpj1, CNPJ const& cnpj2){
+	return cnpj1.obterCNPJ() == cnpj2.obterCNPJ();
 }
 
 class RG{
@@ -180,6 +194,10 @@ public:
 		cout << " Preco: R$ " << fixed << setprecision(2) << preco_ << endl;
 	}
 
+	string getProdutoNome() {return produto_nome_;}
+	float getPreco() {return preco_;}
+	int getQuantidade() {return quantidade_;}
+
 private:
 	string produto_nome_;
 	float preco_;
@@ -275,7 +293,7 @@ public:
 		rg_.leiaRG();
 	}
 
-	void mostrePessoa_F(){
+	void mostreCliente_F(){
 		Cliente::mostreCliente();
 		cpf_.mostreCPF();
 		rg_.mostreRG();
@@ -323,9 +341,9 @@ private:
 
 class Funcionario : public Pessoa{
 public:
-	Funcionario(Pessoa pessoa, Data dataContratacao, float salario) :
-	Pessoa{pessoa}, dataContratacao_{dataContratacao}, salario_{salario} {}
-	Funcionario() : Pessoa{}, dataContratacao_{}, salario_{0.0} {}
+	Funcionario(Pessoa pessoa, CPF cpf, RG rg, Data dataContratacao, float salario) :
+	Pessoa{pessoa}, cpf_{cpf}, rg_{rg} ,dataContratacao_{dataContratacao}, salario_{salario} {}
+	Funcionario() : Pessoa{}, cpf_{}, rg_{}, dataContratacao_{}, salario_{0.0} {}
 
 	void leiaFuncionario(){
 		Pessoa::leiaPessoa();
@@ -363,186 +381,430 @@ private:
 	float salario_;
 };
 
-class Lista_Cliente{
-	struct Noh
-	{
-		Cliente cliente_;
-		Noh *prox_;
-	};
-public:
-	Lista_Cliente(){
-		cabeca_ = NULL;
-		tamanho_ = 0;
-	}
-
-	void adicionarCliente(Cliente_fisico c)
-	{
-		Noh *n = new Noh();
-		n->cliente_ = c;
-		n-> prox_ = cabeca_;
-
-		cabeca_ = n;
-		tamanho_++;
-	}
-
-	void adicionarCliente(Cliente_juridico c)
-	{
-		Noh *n = new Noh();
-		n->cliente_ = c;
-		n->prox_ = cabeca_;
-
-		cabeca_ = n;
-		tamanho_++;
-	}
-
-	void mostrarLista_Cliente()
-	{
-		if(tamanho_ > 0)
-        {
-            Noh *temp;
-            temp = cabeca_;
-            while(temp!=NULL)
-            {
-                temp->cliente_.mostreCliente();
-                temp=temp->prox_;
-            }
-        }
-        else
-        {
-            cout << "Não tem clientes cadastrados!" << endl;
-        }
-	}
-
-private:
-	Noh *cabeca_;
-	int tamanho_;
-};
-
-class Login
+class Gerente : public Funcionario
 {
 public:
-	Login(string usuario, string senha) :
-	usuario_{usuario}, senha_{senha} {}
-	Login() : usuario_{}, senha_{} {}
+	Gerente(Funcionario funcionario) : Funcionario{funcionario} {}
+	Gerente() : Funcionario{} {}
 
-	void leiaLogin()
-	{
-		cout << " Digite o nome de usuario: ";
-		getline(cin, usuario_);
-		cout << " Digite a senha: ";
-		getline(cin, senha_);
+	void leiaGerente(){
+		Funcionario::leiaFuncionario();
 	}
 
-	void mostreLogin()
-	{
-		cout << " Usuario: " << usuario_ << endl;
-		cout << " Senha: " << senha_ << endl;
+	void mostreGerente(){
+		Funcionario::mostreFuncionario();
 	}
+
+	void inicializarProdutos()
+	{
+		string nome, str_quantidade, str_preco, revista_genero, livro_editora, livro_volume, livro_genero, revista_edicao ,revista_publicadora;
+		int quantidade;
+		float preco;
+		ifstream arquivoLivros, arquivoRevistas, arquivoDiversos;
+		arquivoLivros.open("produtos_livros.txt");
+		arquivoRevistas.open("produtos_revistas.txt");
+		arquivoDiversos.open("produtos_diversos.txt");
+		while(!arquivoLivros.eof())
+		{
+			getline(arquivoLivros, nome);
+			getline(arquivoLivros, str_quantidade);
+			getline(arquivoLivros, str_preco);
+			getline(arquivoLivros, livro_genero);
+			getline(arquivoLivros, livro_volume);
+			getline(arquivoLivros, livro_editora);
+			
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_quantidade = str_quantidade.find(": ");
+        	size_t pos_preco = str_preco.find(": ");
+        	size_t pos_genero = livro_genero.find(": ");
+        	size_t pos_volume= livro_volume.find(": ");
+        	size_t pos_editora = livro_editora.find(": ");
+
+        	nome = nome.substr(pos_nome + 2);
+        	str_quantidade = str_quantidade.substr(pos_quantidade + 2);
+        	str_preco = str_preco.substr(pos_preco + 4);
+        	livro_genero = livro_genero.substr(pos_genero + 2);
+        	livro_volume = livro_volume.substr(pos_volume + 2);
+        	livro_editora = livro_editora.substr(pos_editora + 2);
+
+        	quantidade = stoi(str_quantidade);
+        	preco = toFloat(str_preco);
+
+        	Produto p(nome,quantidade,preco);
+        	Livro l(p,livro_editora,livro_volume,livro_genero);
+        	stockProdutos_.push_back(l);
+		}
+
+		while(!arquivoRevistas.eof())
+		{
+			getline(arquivoRevistas, nome);
+			getline(arquivoRevistas, str_quantidade);
+			getline(arquivoRevistas, str_preco);
+			getline(arquivoRevistas, revista_genero);
+			getline(arquivoRevistas, revista_edicao);
+			getline(arquivoRevistas, revista_publicadora);
+
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_quantidade = str_quantidade.find(": ");
+        	size_t pos_preco = str_preco.find(": ");
+        	size_t pos_genero = revista_genero.find(": ");
+        	size_t pos_edicao= revista_edicao.find(": ");
+        	size_t pos_publicadora = revista_publicadora.find(": ");
+
+        	nome = nome.substr(pos_nome + 2);
+        	str_quantidade = str_quantidade.substr(pos_quantidade + 2);
+        	str_preco = str_preco.substr(pos_preco + 2);
+        	revista_genero = revista_genero.substr(pos_genero + 2);
+        	revista_edicao = revista_edicao.substr(pos_edicao + 2);
+        	revista_publicadora = revista_publicadora.substr(pos_publicadora + 2);
+
+        	quantidade = stoi(str_quantidade);
+        	preco = toFloat(str_preco);
+
+        	Produto p(nome,quantidade,preco);
+        	Revista r(p,revista_edicao,revista_publicadora,revista_genero);
+        	stockProdutos_.push_back(r);
+
+		}
+
+		while(!arquivoDiversos.eof())
+		{
+			getline(arquivoDiversos, nome);
+			getline(arquivoDiversos, str_quantidade);
+			getline(arquivoDiversos, str_preco);
+
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_quantidade = str_quantidade.find(": ");
+        	size_t pos_preco = str_preco.find(": ");
+   			
+        	nome = nome.substr(pos_nome + 2);
+        	str_quantidade = str_quantidade.substr(pos_quantidade + 2);
+        	str_preco = str_preco.substr(pos_preco + 4);
+
+        	quantidade = stoi(str_quantidade);
+        	preco = toFloat(str_preco);
+
+        	Produto p(nome,quantidade,preco);
+        	stockProdutos_.push_back(p);
+
+		}
+
+		arquivoLivros.close();
+		arquivoRevistas.close();
+		arquivoDiversos.close();
+	}
+
+	void inicializarFuncionarios()
+	{
+		string nome, e_rua, e_num, e_bairro, e_cep, telefone, cpf, rg, data, salario;
+		ifstream arquivoFuncionarios;
+		arquivoFuncionarios.open("funcionarios.txt");
+		while(!arquivoFuncionarios.eof())
+		{
+			getline(arquivoFuncionarios, nome);
+			getline(arquivoFuncionarios, e_rua);
+			getline(arquivoFuncionarios, e_num);
+			getline(arquivoFuncionarios, e_bairro);
+			getline(arquivoFuncionarios, e_cep);
+			getline(arquivoFuncionarios, telefone);
+			getline(arquivoFuncionarios, cpf);
+			getline(arquivoFuncionarios, rg);
+			getline(arquivoFuncionarios, data);
+			getline(arquivoFuncionarios, salario);
+
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_rua = e_rua.find(": ");
+        	size_t pos_num = e_num.find(": ");
+        	size_t pos_bairro = e_bairro.find(": ");
+        	size_t pos_cep = e_cep.find(": ");
+        	size_t pos_tel = telefone.find(": ");
+        	size_t pos_cpf = cpf.find(": ");
+        	size_t pos_rg = rg.find(": ");
+        	size_t pos_data = data.find(": ");
+        	size_t pos_salario = salario.find(": ");
+
+        	nome = nome.substr(pos_nome + 2);
+        	e_rua = e_rua.substr(pos_rua + 2);
+        	e_num = e_num.substr(pos_num + 2);
+        	e_bairro = e_bairro.substr(pos_bairro + 2);
+        	e_cep = e_cep.substr(pos_cep + 2);
+        	telefone = telefone.substr(pos_tel + 2);
+        	cpf = cpf.substr(pos_cpf + 2);
+        	rg = rg.substr(pos_rg + 2);
+        	data = data.substr(pos_data + 2);
+        	salario = salario.substr(pos_salario + 4);
+
+
+        	string str_dia, str_mes, str_ano;
+
+        	str_dia = data.substr(0,2);
+        	str_mes = data.substr(3,2);
+        	str_ano = data.substr(6,4);
+
+        	int dia, mes, ano;
+
+        	dia = stoi(str_dia);
+        	mes = stoi(str_mes);
+        	ano = stoi(str_ano);
+
+        	float salario_f = toFloat(salario);
+
+        	Endereco e_f(e_rua, e_num, e_bairro, e_cep);
+        	CPF cpf_f(cpf);
+        	RG rg_f(rg);
+        	Data data_f(dia,mes,ano);
+        	Telefone tel_f(telefone);
+
+        	Pessoa p(nome,e_f,tel_f);
+        	Funcionario f_p(p,cpf_f,rg_f,data_f,salario_f);
+
+        	cadastroFuncionario_.push_back(f_p);
+
+
+		}
+
+		arquivoFuncionarios.close();
+	}
+
+	void inicializarClientesF()
+	{
+		string nome, e_rua, e_num, e_bairro, e_cep, telefone, cpf, rg;
+		ifstream arquivoClientesF;
+		arquivoClientesF.open("clientes_fisicos.txt");
+		while(!arquivoClientesF.eof())
+		{
+			getline(arquivoClientesF, nome);
+			getline(arquivoClientesF, e_rua);
+			getline(arquivoClientesF, e_num);
+			getline(arquivoClientesF, e_bairro);
+			getline(arquivoClientesF, e_cep);
+			getline(arquivoClientesF, telefone);
+			getline(arquivoClientesF, cpf);
+			getline(arquivoClientesF, rg);
+
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_rua = e_rua.find(": ");
+        	size_t pos_num = e_num.find(": ");
+        	size_t pos_bairro = e_bairro.find(": ");
+        	size_t pos_cep = e_cep.find(": ");
+        	size_t pos_tel = telefone.find(": ");
+        	size_t pos_cpf = cpf.find(": ");
+        	size_t pos_rg = rg.find(": ");
+
+        	nome = nome.substr(pos_nome + 2);
+        	e_rua = e_rua.substr(pos_rua + 2);
+        	e_num = e_num.substr(pos_num + 2);
+        	e_bairro = e_bairro.substr(pos_bairro + 2);
+        	e_cep = e_cep.substr(pos_cep + 2);
+        	telefone = telefone.substr(pos_tel + 2);
+        	cpf = cpf.substr(pos_cpf + 2);
+        	rg = rg.substr(pos_rg + 2);
+
+        	CPF cpf_p(cpf);
+        	RG rg_p(rg);
+        	Endereco e_p(e_rua, e_num, e_bairro, e_cep);
+        	Telefone tel_p(telefone);
+
+        	Pessoa p(nome,e_p,tel_p);
+        	Cliente c_p(p);
+        	Cliente_fisico cf_p(c_p, cpf_p, rg_p);
+        	cadastroClienteF_.push_back(cf_p);
+		}
+
+		arquivoClientesF.close();
+	}
+
+	void mostrarCadastroClientesF()
+	{
+		int size = cadastroClienteF_.size();
+		for(int i = 0; i < size; i++)
+		{
+			
+			cadastroClienteF_[i].mostreCliente_F();
+			cout << endl;
+		}
+	}
+
+	void mostrarCadastroClientesJ()
+	{
+		int size = cadastroClienteJ_.size();
+		for(int i = 0; i < size; i++)
+		{
+			
+			cadastroClienteJ_[i].mostreCliente_J();
+			cout << endl;
+		}
+	}
+
+	void mostrarCadastroProdutos()
+	{
+		int size = stockProdutos_.size();
+		for(int i = 0; i < size; i++)
+		{
+
+			stockProdutos_[i].mostreProduto();
+			cout << endl;
+		}
+	}
+
+	void mostrarCadastroFuncionarios()
+	{
+		int size = cadastroFuncionario_.size();
+		for(int i = 0; i < size; i++)
+		{
+
+			cadastroFuncionario_[i].mostreFuncionario();
+			cout << endl;
+		}
+	}
+	void adicionarCliente()
+	{
+		cout << "Qual o tipo do cliente? 1 - Físico | 2 - Jurídico" << endl;
+		int op;
+		cin >> op;
+		switch(op)
+		{
+			case 1:{adicionarClienteF();break;}
+			case 2:{adicionarClienteJ();break;}
+		}
+
+		cout << endl;
+	}
+	void adicionarClienteF()
+	{
+		Cliente_fisico cf;
+		cf.leiaCliente_F();
+		cadastroClienteF_.push_back(cf);
+	}
+	void adicionarClienteJ()
+	{
+		Cliente_juridico cj;
+		cj.leiaCliente_J();
+		cadastroClienteJ_.push_back(cj);
+	}
+	void adicionarFuncionario() 
+	{
+		Funcionario f;
+		f.leiaFuncionario();
+		cadastroFuncionario_.push_back(f);
+	}
+	void adicionarProduto()
+	{
+		cout << "Qual o tipo de produto? 1 - Livro | 2 - Revista | 3 - Diverso " << endl;
+		int op;
+		cin >> op;
+		switch(op)
+		{
+			case 1:{adicionarLivro(); break;}
+			case 2:{adicionarRevista(); break;}
+			case 3:{adicionarDiverso(); break;}
+		}
+		cout << endl;
+	}
+
+	void adicionarLivro()
+	{
+		Livro l;
+		l.leiaLivro();
+		stockProdutos_.push_back(l);
+	}
+	void adicionarRevista()
+	{
+		Revista r;
+		r.leiaRevista();
+		stockProdutos_.push_back(r);
+	}
+	void adicionarDiverso()
+	{
+		Produto p;
+		p.leiaProduto();
+		stockProdutos_.push_back(p);
+	}
+
+	int buscarClienteF(string str_cpf)
+	{
+		CPF key(str_cpf);
+		int size = cadastroClienteF_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(key == cadastroClienteF_[i].obterCPF())
+			{
+				return i;
+			}
+		}
+		cout << "Cliente não encontrado! " << endl;
+		return -1;
+	}
+
+	int buscarClienteJ(string str_cnpj)
+	{
+		CNPJ key(str_cnpj);
+		int size = cadastroClienteJ_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(key == cadastroClienteJ_[i].obterCNPJ())
+			{
+				return i;
+			}
+		}
+		cout << "Cliente não encontrado! " << endl;
+		return -1;
+	}
+
+	int buscarFuncionario(string str_cpf)
+	{
+		CPF key(str_cpf);
+		int size = cadastroFuncionario_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(key == cadastroFuncionario_[i].obterCPF())
+			{
+				return i;
+			}
+		}
+		cout << "Cliente não encontrado! " << endl;
+		return -1;
+	}
+
+	int buscarProduto(string str_nome)
+	{
+		
+		int size = stockProdutos_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(str_nome == stockProdutos_[i].getProdutoNome())
+			{
+				return i;
+			}
+		}
+		cout << "Produto não encontrado! " << endl;
+		return -1;
+	}
+
+	/*void removerProduto()
+	{
+		string key;
+		cout << " Digite o nome do produto que deseja remover: ";
+		getline(cin, key);
+		cin.ignore;
+		int indice = buscarProduto(key);
+	}*/
+
 private:
-	string usuario_;
-	string senha_;
+	deque<Produto> stockProdutos_;
+	deque<Cliente_fisico> cadastroClienteF_;
+	deque<Cliente_juridico> cadastroClienteJ_;
+	deque<Funcionario> cadastroFuncionario_;
+
 };
 
-class Lista_Login{
-	struct Noh
-	{
-		Login login_;
-		Noh *prox_;
-	};
-public:
-	Lista_Login(){
-		cabeca_ = NULL;
-		tamanho_ = 0;
-	}
-
-	void adicionarLogin(Login l)
-	{
-		Noh *n = new Noh();
-		n->login_ = l;
-		n-> prox_ = cabeca_;
-
-		cabeca_ = n;
-		tamanho_++;
-	}
-
-	void mostrarLista_Login()
-	{
-		if(tamanho_ > 0)
-        {
-            Noh *temp;
-            temp = cabeca_;
-            while(temp!=NULL)
-            {
-                temp->login_.mostreLogin();
-                temp=temp->prox_;
-            }
-        }
-        else
-        {
-            cout << "Não tem logins cadastrados!" << endl;
-        }
-	}
-
-	int tamanhoLista()
-	{
-		return tamanho_;	
-	}
-
-private:
-	Noh *cabeca_;
-	int tamanho_;
-};
-
-class Livraria{
-public:
-	Livraria() : listLogin_{} {}
-
-	void preencherLogin()
-	{
-		string usuario, senha;
-		ifstream infile;
-        infile.open("usuarios.txt");
-        while(!infile.eof()) 
-        {
-        	getline(infile,usuario);
-        	getline(infile,senha);
-
-        	size_t pos_usuario = usuario.find(": ");
-        	size_t pos_senha = senha.find(": ");
-
-        	usuario = usuario.substr(pos_usuario + 2);
-        	senha = senha.substr(pos_senha + 2);
-
-        	Login text_login(usuario,senha);
-        	listLogin_.adicionarLogin(text_login);
-        }
-
-        infile.close();
-
-	}
-
-	void mostrarLogin()
-	{
-		listLogin_.mostrarLista_Login();
-	}
-
-	void cadastrarLogin()
-	{
-		Login novo_login;
-		novo_login.leiaLogin();
-		listLogin_.adicionarLogin(novo_login);
-	}
-
-	void fecharLogin()
-	{
-
-	}
-private:
-	Lista_Login listLogin_;
-};
 
 int main(){
-	Livraria saraiva;
-	saraiva.preencherLogin();
-	saraiva.mostrarLogin();
-}
+	Gerente g;
+	g.inicializarFuncionarios();
+	g.mostrarCadastroFuncionarios();
+};

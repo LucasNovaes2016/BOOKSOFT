@@ -1,0 +1,6 @@
+Nome: Livro
+Quantidade: 2
+Preço: R$8.65
+Genero: Aventura
+Volume: Kill me
+Editora: Please, I Just want to rest
