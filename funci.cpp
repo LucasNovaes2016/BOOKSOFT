@@ -176,15 +176,25 @@ private:
 class CNPJ{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe CNPJ é utilizado para instanciar um objeto CNPJ.
+	 * @param	cnpj Número do CNPJ.
+	 */
 	CNPJ(string cnpj) : cnpj_{cnpj} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	c Objeto do tipo CNPJ.
+	 */
 	CNPJ(CNPJ const& c) : cnpj_{c.cnpj_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	CNPJ() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto CNPJ. Contém tratamento de exceções que mantém a entrada com 14 dígitos.
+ 	*/
 	void leiaCNPJ() {
 
 		cout << " Informe CNPJ: ";
@@ -201,7 +211,9 @@ public:
 		}
 
 	}
-
+	/**
+	 * @details Método de impressão do objeto CNPJ.
+ 	*/
 	void mostreCNPJ() { cout << " CNPJ: " << cnpj_ << endl; }
 
 
@@ -217,8 +229,6 @@ private:
 	string cnpj_; /**< CNPJ */
 
 };
-
-
 
 bool operator==(CPF const& cpf1, CPF const& cpf2){
 
@@ -239,15 +249,25 @@ bool operator==(CNPJ const& cnpj1, CNPJ const& cnpj2){
 class RG{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe RG é utilizado para instanciar um objeto RG.
+	 * @param	rg Número do RG.
+	 */
 	RG(string rg) : rg_{rg} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	r Objeto do tipo RG.
+	 */
 	RG(RG const& r) : rg_{r.rg_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	RG() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto RG. Contém tratamento de exceções que mantém a entrada com 9 dígitos.
+ 	*/
 	void leiaRG(){
 
 		cout << " Informe RG: ";
@@ -266,7 +286,9 @@ public:
 	}
 
 
-
+	/**
+	 * @details Método de impressão do objeto RG.
+ 	*/
 	void mostreRG() { cout << " RG: " << rg_ << endl; }
 
 private:
