@@ -37,22 +37,26 @@ float toFloat(string s) {
 class Data{
 
 public:
-	/**
+	 /**
 	 * @details O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data.
 	 * @param	dia Dia
 	 * @param	mes Mês
 	 * @param	ano Ano
 	 */
 	Data(int dia, int mes, int ano) : dia_{dia}, mes_{mes}, ano_{ano} {}
-
+	 /**
+	 * @details 	O construtor parametrizado da classe Data é utilizado para instanciar um objeto Data.
+	 * @param	d Objeto do tipo data
+	 */
 	Data(Data const& d) : dia_{d.dia_}, mes_{d.mes_}, ano_{d.ano_} {}
-	
-
+	/**
+	 * @details Construtor padrão
+	 */
 	Data() = default;
 
 
 	/**
-	 * @details Método de leitura do objeto Data (dia, mês e ano) com tratamento de exceções.
+	 * @details Método de leitura do objeto Data (dia, mês e ano) com tratamento de exceções para manter a proximidade com a realidade.
  	*/
 	void leiaData() {
 
@@ -114,15 +118,25 @@ private:
 class CPF{
 
 public:
-
+	 /**
+	 * @details 	O construtor parametrizado da classe CPF é utilizado para instanciar um objeto CPF.
+	 * @param	cpf Número do CPF.
+	 */
 	CPF(string cpf) : cpf_{cpf} {}
-
+	 /**
+	 * @details 	Construtor por cópia.
+	 * @param	c Objeto do tipo CPF.
+	 */
 	CPF(CPF const& c) : cpf_{c.cpf_} {}
-
+	 /**
+	 * @details 	Construtor padrão.
+	 */
 	CPF() = default;
 
 
-
+	/**
+	 * @details Método de leitura do objeto CPF. Contém tratamento de exceções que mantém a entrada com 11 dígitos.
+ 	*/
 	void leiaCPF() {
 
 		cout << " Informe CPF: ";
@@ -138,7 +152,9 @@ public:
 		}
 
 	}
-
+	/**
+	 * @details Método de impressão do objeto CPF.
+ 	*/
 	void mostreCPF() { cout << " CPF: " << cpf_ << endl; }
 
 
