@@ -31,6 +31,41 @@ public:
 	}
 	void mostreData() { cout << dia_ << "/" << mes_ << "/" << ano_ << endl; }
 
+	string obterData() 
+	{
+		ostringstream os_data; 
+		string data;
+		if(dia_ < 10)
+		{
+			if(mes_ < 10)
+			{
+				os_data << "0" << dia_ << "/0" << mes_ << "/" << ano_;
+				data = os_data.str();
+				return data;
+			}
+			else
+			{
+				os_data << "0" << dia_ << "/" << mes_ << "/" << ano_;
+				data = os_data.str();
+				return data;
+			}
+			
+		}
+		else if(mes_ < 10)
+		{
+			os_data << dia_ << "/0" << mes_ << "/" << ano_;
+			data = os_data.str();
+			return data;
+		}
+		else
+		{
+			os_data << dia_ << "/" << mes_ << "/" << ano_;
+			data = os_data.str();
+			return data;
+		}
+		
+	}
+
 private:
 	int dia_;
 	int mes_;
@@ -95,6 +130,8 @@ public:
 	}
 
 	void mostreRG() { cout << " RG: " << rg_ << endl; }
+
+	string obterRG() {return rg_; }
 private:
 	string rg_;
 };
@@ -111,6 +148,8 @@ public:
 	}
 
 	void mostreTelefone() { cout << " Telefone: " << tel_ << endl; }
+
+	string obterTelefone() {return tel_; }
 private:
 	string tel_;
 };
@@ -133,6 +172,10 @@ public:
 	}
 	void mostreEndereco() { cout << rua_ << " , Nº " << numero_ << "\n Bairro:  " << bairro_  << ", " << cep_ << endl; }
 
+	string obterRua() { return rua_; }
+	string obterNumero() {return numero_; }
+	string obterBairro() {return bairro_; }
+	string obterCEP() {return cep_;}
 private:
 	string numero_;
 	string rua_;
@@ -164,6 +207,10 @@ public:
 		telefone_.mostreTelefone();
 	}
 
+	string obterPessoaNome() {return nome_;}
+	Endereco obterPessoaEndereco() { return endereco_;}
+	Telefone obterPessoaTelefone() {return telefone_;}
+
 private:
 	string nome_;
 	Endereco endereco_;
@@ -194,9 +241,9 @@ public:
 		cout << " Preco: R$ " << fixed << setprecision(2) << preco_ << endl;
 	}
 
-	string getProdutoNome() {return produto_nome_;}
-	float getPreco() {return preco_;}
-	int getQuantidade() {return quantidade_;}
+	string obterProdutoNome() {return produto_nome_;}
+	float obterPreco() {return preco_;}
+	int obterQuantidade() {return quantidade_;}
 
 private:
 	string produto_nome_;
@@ -228,6 +275,10 @@ public:
 		cout << " Editora: " << editora_ << endl;
 	}
 
+	string obterLivroEditora() {return editora_;}
+	string obterLivroVolume() {return volume_;}
+	string obterLivroGenero() {return livro_genero_;}
+
 private:
 	string editora_, volume_, livro_genero_;
 };
@@ -256,6 +307,10 @@ public:
 		cout << " Publicador: " << publicador_ << endl;
 	}
 
+	string obterRevistaEdicao() {return edicao_;}
+	string obterRevistaPublicador() {return publicador_;}
+	string obterRevistaGenero() {return revista_genero_;}
+
 private:
 	string edicao_, publicador_, revista_genero_;
 };
@@ -274,6 +329,7 @@ public:
 	{
 		Pessoa::mostrePessoa();
 	}
+
 private:
 };
 
@@ -302,7 +358,7 @@ public:
 	CPF const& obterCPF() const{
 		return cpf_;
 	}
-
+	RG obterClienteFRG() { return rg_;}
 private:
 	CPF cpf_;
 	RG rg_;
@@ -333,7 +389,7 @@ public:
 	CNPJ const& obterCNPJ() const{
 		return cnpj_;
 	}
-
+	string obterRazaoSocial() { return razaosocial_;}
 private:
 	CNPJ cnpj_;
 	string razaosocial_;
@@ -373,7 +429,8 @@ public:
 	CPF const& obterCPF() const{
 		return cpf_;
 	}
-
+	RG obterRG() {return rg_;}
+	Data obterData() { return dataContratacao_;}
 private:
 	CPF cpf_;
 	RG rg_;
@@ -398,6 +455,7 @@ public:
 	void inicializarProdutos()
 	{
 		string nome, str_quantidade, str_preco, revista_genero, livro_editora, livro_volume, livro_genero, revista_edicao ,revista_publicadora;
+		string blank_line;
 		int quantidade;
 		float preco;
 		ifstream arquivoLivros, arquivoRevistas, arquivoDiversos;
@@ -412,6 +470,7 @@ public:
 			getline(arquivoLivros, livro_genero);
 			getline(arquivoLivros, livro_volume);
 			getline(arquivoLivros, livro_editora);
+			getline(arquivoLivros, blank_line);
 			
 			size_t pos_nome = nome.find(": ");
         	size_t pos_quantidade = str_quantidade.find(": ");
@@ -432,7 +491,7 @@ public:
 
         	Produto p(nome,quantidade,preco);
         	Livro l(p,livro_editora,livro_volume,livro_genero);
-        	stockProdutos_.push_back(l);
+        	stockLivros_.push_back(l);
 		}
 
 		while(!arquivoRevistas.eof())
@@ -443,6 +502,7 @@ public:
 			getline(arquivoRevistas, revista_genero);
 			getline(arquivoRevistas, revista_edicao);
 			getline(arquivoRevistas, revista_publicadora);
+			getline(arquivoRevistas, blank_line);
 
 			size_t pos_nome = nome.find(": ");
         	size_t pos_quantidade = str_quantidade.find(": ");
@@ -463,7 +523,7 @@ public:
 
         	Produto p(nome,quantidade,preco);
         	Revista r(p,revista_edicao,revista_publicadora,revista_genero);
-        	stockProdutos_.push_back(r);
+        	stockRevistas_.push_back(r);
 
 		}
 
@@ -472,6 +532,7 @@ public:
 			getline(arquivoDiversos, nome);
 			getline(arquivoDiversos, str_quantidade);
 			getline(arquivoDiversos, str_preco);
+			getline(arquivoDiversos, blank_line);
 
 			size_t pos_nome = nome.find(": ");
         	size_t pos_quantidade = str_quantidade.find(": ");
@@ -497,6 +558,7 @@ public:
 	void inicializarFuncionarios()
 	{
 		string nome, e_rua, e_num, e_bairro, e_cep, telefone, cpf, rg, data, salario;
+		string blank_line;
 		ifstream arquivoFuncionarios;
 		arquivoFuncionarios.open("funcionarios.txt");
 		while(!arquivoFuncionarios.eof())
@@ -511,6 +573,7 @@ public:
 			getline(arquivoFuncionarios, rg);
 			getline(arquivoFuncionarios, data);
 			getline(arquivoFuncionarios, salario);
+			getline(arquivoFuncionarios, blank_line);
 
 			size_t pos_nome = nome.find(": ");
         	size_t pos_rua = e_rua.find(": ");
@@ -549,7 +612,7 @@ public:
 
         	float salario_f = toFloat(salario);
 
-        	Endereco e_f(e_rua, e_num, e_bairro, e_cep);
+        	Endereco e_f(e_num, e_rua, e_bairro, e_cep);
         	CPF cpf_f(cpf);
         	RG rg_f(rg);
         	Data data_f(dia,mes,ano);
@@ -569,6 +632,7 @@ public:
 	void inicializarClientesF()
 	{
 		string nome, e_rua, e_num, e_bairro, e_cep, telefone, cpf, rg;
+		string blank_line;
 		ifstream arquivoClientesF;
 		arquivoClientesF.open("clientes_fisicos.txt");
 		while(!arquivoClientesF.eof())
@@ -581,6 +645,7 @@ public:
 			getline(arquivoClientesF, telefone);
 			getline(arquivoClientesF, cpf);
 			getline(arquivoClientesF, rg);
+			getline(arquivoClientesF, blank_line);
 
 			size_t pos_nome = nome.find(": ");
         	size_t pos_rua = e_rua.find(": ");
@@ -602,7 +667,7 @@ public:
 
         	CPF cpf_p(cpf);
         	RG rg_p(rg);
-        	Endereco e_p(e_rua, e_num, e_bairro, e_cep);
+        	Endereco e_p(e_num, e_rua, e_bairro, e_cep);
         	Telefone tel_p(telefone);
 
         	Pessoa p(nome,e_p,tel_p);
@@ -612,6 +677,55 @@ public:
 		}
 
 		arquivoClientesF.close();
+	}
+
+	void inicializarClientesJ()
+	{
+		string nome, e_rua, e_num, e_bairro, e_cep, telefone, cnpj, razaosocial;
+		string blank_line;
+		ifstream arquivoClientesJ;
+		arquivoClientesJ.open("clientes_juridicos.txt");
+		while(!arquivoClientesJ.eof())
+		{
+			getline(arquivoClientesJ, nome);
+			getline(arquivoClientesJ, e_rua);
+			getline(arquivoClientesJ, e_num);
+			getline(arquivoClientesJ, e_bairro);
+			getline(arquivoClientesJ, e_cep);
+			getline(arquivoClientesJ, telefone);
+			getline(arquivoClientesJ, cnpj);
+			getline(arquivoClientesJ, razaosocial);
+			getline(arquivoClientesJ, blank_line);
+
+			size_t pos_nome = nome.find(": ");
+        	size_t pos_rua = e_rua.find(": ");
+        	size_t pos_num = e_num.find(": ");
+        	size_t pos_bairro = e_bairro.find(": ");
+        	size_t pos_cep = e_cep.find(": ");
+        	size_t pos_tel = telefone.find(": ");
+        	size_t pos_cnpj = cnpj.find(": ");
+        	size_t pos_razaosocial = razaosocial.find(": ");
+
+        	nome = nome.substr(pos_nome + 2);
+        	e_rua = e_rua.substr(pos_rua + 2);
+        	e_num = e_num.substr(pos_num + 2);
+        	e_bairro = e_bairro.substr(pos_bairro + 2);
+        	e_cep = e_cep.substr(pos_cep + 2);
+        	telefone = telefone.substr(pos_tel + 2);
+        	cnpj = cnpj.substr(pos_cnpj + 2);
+        	razaosocial = razaosocial.substr(pos_razaosocial + 2);
+
+        	CNPJ cnpj_j(cnpj);
+        	Endereco e_p(e_num, e_rua, e_bairro, e_cep);
+        	Telefone tel_p(telefone);
+
+        	Pessoa p(nome,e_p,tel_p);
+        	Cliente c_p(p);
+        	Cliente_juridico cj_p(c_p, cnpj_j, razaosocial);
+        	cadastroClienteJ_.push_back(cj_p);
+		}
+
+		arquivoClientesJ.close();
 	}
 
 	void mostrarCadastroClientesF()
@@ -636,13 +750,35 @@ public:
 		}
 	}
 
-	void mostrarCadastroProdutos()
+	void mostrarCadastroProdutosDiversos()
 	{
 		int size = stockProdutos_.size();
 		for(int i = 0; i < size; i++)
 		{
 
 			stockProdutos_[i].mostreProduto();
+			cout << endl;
+		}
+	}
+
+	void mostrarCadastroLivros()
+	{
+		int size = stockLivros_.size();
+		for(int i = 0; i < size; i++)
+		{
+
+			stockLivros_[i].mostreLivro();
+			cout << endl;
+		}
+	}
+
+	void mostrarCadastroRevistas()
+	{
+		int size = stockRevistas_.size();
+		for(int i = 0; i < size; i++)
+		{
+
+			stockRevistas_[i].mostreRevista();
 			cout << endl;
 		}
 	}
@@ -769,14 +905,14 @@ public:
 		return -1;
 	}
 
-	int buscarProduto(string str_nome)
+	int buscarProdutoDiverso(string str_nome)
 	{
 		
 		int size = stockProdutos_.size();
 
 		for(int i = 0; i < size; i++)
 		{
-			if(str_nome == stockProdutos_[i].getProdutoNome())
+			if(str_nome == stockProdutos_[i].obterProdutoNome())
 			{
 				return i;
 			}
@@ -785,17 +921,457 @@ public:
 		return -1;
 	}
 
-	/*void removerProduto()
+	int buscarLivro(string str_nome)
+	{
+		
+		int size = stockLivros_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(str_nome == stockLivros_[i].obterProdutoNome())
+			{
+				return i;
+			}
+		}
+		cout << "Produto não encontrado! " << endl;
+		return -1;
+	}
+
+	int buscarRevista(string str_nome)
+	{
+		
+		int size = stockRevistas_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			if(str_nome == stockRevistas_[i].obterProdutoNome())
+			{
+				return i;
+			}
+		}
+		cout << "Produto não encontrado! " << endl;
+		return -1;
+	}
+
+	void removerProdutoDiverso()
 	{
 		string key;
 		cout << " Digite o nome do produto que deseja remover: ";
 		getline(cin, key);
-		cin.ignore;
-		int indice = buscarProduto(key);
-	}*/
+		cin.ignore();
+		int indice = buscarProdutoDiverso(key);
+
+		if(indice == -1)
+		{
+			cout << "Produto não existe! " << endl;
+		}
+		else
+		{
+			stockProdutos_.erase(stockProdutos_.begin() + indice);
+		}
+	}
+
+	void removerLivro()
+	{
+		string key;
+		cout << " Digite o nome do produto que deseja remover: ";
+		getline(cin, key);
+		cin.ignore();
+		int indice = buscarLivro(key);
+
+		if(indice == -1)
+		{
+			cout << "Produto não existe! " << endl;
+		}
+		else
+		{
+			stockLivros_.erase(stockLivros_.begin() + indice);
+		}
+	}
+
+	void removerRevista()
+	{
+		string key;
+		cout << " Digite o nome do produto que deseja remover: ";
+		getline(cin, key);
+		cin.ignore();
+		int indice = buscarRevista(key);
+
+		if(indice == -1)
+		{
+			cout << "Produto não existe! " << endl;
+		}
+		else
+		{
+			stockRevistas_.erase(stockRevistas_.begin() + indice);
+		}
+	}
+
+	void removerProduto()
+	{
+		int op;
+		cout << "Qual tipo de produto deseja remover? 1 - Livro | 2 - Revista | 3 - Produto Diverso" << endl;
+		cin >> op;
+		switch(op)
+		{
+			case 1: {removerLivro();break;}
+			case 2: {removerRevista();break;}
+			case 3: {removerProdutoDiverso();break;}
+		}
+		cout << endl;
+		
+	}
+
+
+	void removerFuncionario()
+	{
+		string key;
+		cout << " Digite o cpf do funcionario que deseja remover: ";
+		getline(cin, key);
+		cin.ignore();
+		
+		int indice = buscarFuncionario(key);
+
+		if(indice == -1)
+		{
+			cout << "Funcionario não existe! " << endl;
+		}
+		else
+		{
+			cadastroFuncionario_.erase(cadastroFuncionario_.begin() + indice);
+			cout << "Funcionario removido com sucesso!" << endl;
+			cout << endl;
+		}
+	}
+	void removerClienteF()
+	{
+		string key;
+		cout << " Digite o cpf do cliente que deseja remover: ";
+		getline(cin, key);
+		cin.ignore();
+		int indice = buscarClienteF(key);
+
+		if(indice == -1)
+		{
+			cout << "Cliente não existe! " << endl;
+		}
+		else
+		{
+			cadastroClienteF_.erase(cadastroClienteF_.begin() + indice);
+		}
+	}
+
+	void removerClienteJ()
+	{
+		string key;
+		cout << " Digite o cnpj do cliente que deseja remover: ";
+		getline(cin, key);
+		cin.ignore();
+		int indice = buscarClienteJ(key);
+
+		if(indice == -1)
+		{
+			cout << "Cliente não existe! " << endl;
+		}
+		else
+		{
+			cadastroClienteJ_.erase(cadastroClienteJ_.begin() + indice);
+		}
+	}
+
+	void removerCliente()
+	{
+		cout << "Qual o tipo do cliente? 1 - Físico | 2 - Jurídico" << endl;
+		int op;
+		cin >> op;
+		switch(op)
+		{
+			case 1:{removerClienteF();break;}
+			case 2:{removerClienteJ();break;}
+		}
+
+		cout << endl;
+	}
+
+	void salvarClientesF()
+	{
+		ofstream clientesf;
+		clientesf.open("clientes_fisicos2.txt");
+		int size = cadastroClienteF_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_nome,os_rua,os_numero,os_bairro,os_cep,os_telefone,os_cpf,os_rg;
+			os_nome << "Nome: " << cadastroClienteF_[i].obterPessoaNome();
+			os_rua << "Rua: " << cadastroClienteF_[i].obterPessoaEndereco().obterRua();
+			os_numero << "Número: " << cadastroClienteF_[i].obterPessoaEndereco().obterNumero();
+			os_bairro << "Bairro: " << cadastroClienteF_[i].obterPessoaEndereco().obterBairro();
+			os_cep << "CEP: " << cadastroClienteF_[i].obterPessoaEndereco().obterCEP();
+			os_telefone << "Telefone: " << cadastroClienteF_[i].obterPessoaTelefone().obterTelefone();
+			os_cpf << "CPF: " << cadastroClienteF_[i].obterCPF().obterCPF();
+			os_rg << "RG: " << cadastroClienteF_[i].obterClienteFRG().obterRG();
+
+			string nome, rua, numero, bairro, cep, telefone, cpf, rg;
+			string blank_line = "";
+			nome = os_nome.str();
+			rua = os_rua.str();
+			numero = os_numero.str();
+			bairro = os_bairro.str();
+			cep = os_cep.str();
+			telefone = os_telefone.str();
+			cpf = os_cpf.str();
+			rg = os_rg.str();
+
+			
+
+			clientesf << nome << endl;
+			clientesf << rua << endl;
+			clientesf << numero << endl;
+			clientesf << bairro << endl;
+			clientesf << cep << endl;
+			clientesf << telefone << endl;
+			clientesf << cpf << endl;
+			clientesf << rg << endl;
+			clientesf << blank_line << endl; 
+			
+		}
+		clientesf.close();
+	}
+
+	void salvarClientesJ()
+	{
+		ofstream clientesj;
+		clientesj.open("clientes_juridicos.txt");
+		int size = cadastroClienteJ_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_nome,os_rua,os_numero,os_bairro,os_cep,os_telefone,os_cnpj,os_razaosocial;
+			os_nome << "Nome: " << cadastroClienteJ_[i].obterPessoaNome();
+			os_rua << "Rua: " << cadastroClienteJ_[i].obterPessoaEndereco().obterRua();
+			os_numero << "Número: " << cadastroClienteJ_[i].obterPessoaEndereco().obterNumero();
+			os_bairro << "Bairro: " << cadastroClienteJ_[i].obterPessoaEndereco().obterBairro();
+			os_cep << "CEP: " << cadastroClienteJ_[i].obterPessoaEndereco().obterCEP();
+			os_telefone << "Telefone: " << cadastroClienteJ_[i].obterPessoaTelefone().obterTelefone();
+			os_cnpj << "CNPJ: " << cadastroClienteJ_[i].obterCNPJ().obterCNPJ();
+			os_razaosocial << "Razão Social: " << cadastroClienteJ_[i].obterRazaoSocial();
+
+			string nome, rua, numero, bairro, cep, telefone, cnpj, razaosocial;
+			string blank_line = "";
+			nome = os_nome.str();
+			rua = os_rua.str();
+			numero = os_numero.str();
+			bairro = os_bairro.str();
+			cep = os_cep.str();
+			telefone = os_telefone.str();
+			cnpj = os_cnpj.str();
+			razaosocial = os_razaosocial.str();
+
+			
+
+			clientesj << nome << endl;
+			clientesj << rua << endl;
+			clientesj << numero << endl;
+			clientesj << bairro << endl;
+			clientesj << cep << endl;
+			clientesj << telefone << endl;
+			clientesj << cnpj << endl;
+			clientesj << razaosocial << endl;
+			clientesj << blank_line << endl; 
+			
+		}
+		clientesj.close();
+	}
+
+	void salvarClientes()
+	{
+		salvarClientesF();
+		salvarClientesJ();
+	}
+
+	void salvarProdutosDiversos()
+	{
+		ofstream produtos_diversos;
+		produtos_diversos.open("produtos_diversos.txt");
+		int size = stockProdutos_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_produto_nome,os_produto_quantidade,os_produto_preco;
+			os_produto_nome << "Nome: " << stockProdutos_[i].obterProdutoNome();
+			os_produto_quantidade << "Quantidade: " << stockProdutos_[i].obterQuantidade();
+			os_produto_preco << "Preço: R$" << stockProdutos_[i].obterPreco();
+			
+
+			string produto_nome, produto_quantidade, produto_preco;
+			string blank_line = "";
+			produto_nome = os_produto_nome.str();
+			produto_quantidade = os_produto_quantidade.str();
+			produto_preco = os_produto_preco.str();
+			
+
+			
+
+			produtos_diversos << produto_nome << endl;
+			produtos_diversos << produto_quantidade << endl;
+			produtos_diversos << produto_preco << endl;
+			produtos_diversos << blank_line << endl; 
+			
+		}
+		produtos_diversos.close();
+	}
+	void salvarLivros()
+	{
+		ofstream produtos_livros;
+		produtos_livros.open("produtos_livros.txt");
+		int size = stockLivros_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_livro_nome,os_livro_quantidade,os_livro_preco, os_livro_genero, os_livro_volume, os_livro_editora;
+			os_livro_nome << "Nome: " << stockLivros_[i].obterProdutoNome();
+			os_livro_quantidade << "Quantidade: " << stockLivros_[i].obterQuantidade();
+			os_livro_preco << "Preço: R$" << stockLivros_[i].obterPreco();
+			os_livro_genero << "Gênero: " << stockLivros_[i].obterLivroGenero();
+			os_livro_volume << "Volume: " << stockLivros_[i].obterLivroVolume();
+			os_livro_editora << "Editora: " << stockLivros_[i].obterLivroEditora();
+			
+
+			string livro_nome, livro_quantidade, livro_preco, livro_genero, livro_volume, livro_editora;;
+			string blank_line = "";
+			livro_nome = os_livro_nome.str();
+			livro_quantidade = os_livro_quantidade.str();
+			livro_preco = os_livro_preco.str();
+			livro_genero = os_livro_genero.str();
+			livro_volume = os_livro_volume.str();
+			livro_editora = os_livro_editora.str();			
+
+			produtos_livros << livro_nome << endl;
+			produtos_livros << livro_quantidade << endl;
+			produtos_livros << livro_preco << endl;
+			produtos_livros << livro_genero << endl;
+			produtos_livros << livro_volume << endl;
+			produtos_livros << livro_editora << endl;
+			produtos_livros << blank_line << endl; 
+			
+		}
+		produtos_livros.close();
+	}
+	void salvarRevistas()
+	{
+		ofstream produtos_revistas;
+		produtos_revistas.open("produtos_revistas.txt");
+		int size = stockRevistas_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_revistas_nome,os_revistas_quantidade,os_revistas_preco, os_revistas_genero, os_revistas_edicao, os_revistas_publicador;
+			os_revistas_nome << "Nome: " << stockRevistas_[i].obterProdutoNome();
+			os_revistas_quantidade << "Quantidade: " << stockRevistas_[i].obterQuantidade();
+			os_revistas_preco << "Preço: R$" << stockRevistas_[i].obterPreco();
+			os_revistas_genero << "Gênero: " << stockRevistas_[i].obterRevistaGenero();
+			os_revistas_edicao << "Edição: " << stockRevistas_[i].obterRevistaEdicao();
+			os_revistas_publicador << "Publicador: " << stockRevistas_[i].obterRevistaPublicador();
+			
+
+			string revistas_nome, revistas_quantidade, revistas_preco, revistas_genero, revistas_edicao, revistas_publicador;
+			string blank_line = "";
+			revistas_nome = os_revistas_nome.str();
+			revistas_quantidade = os_revistas_quantidade.str();
+			revistas_preco = os_revistas_preco.str();
+			revistas_genero = os_revistas_genero.str();
+			revistas_edicao = os_revistas_edicao.str();
+			revistas_publicador = os_revistas_publicador.str();
+			
+
+			
+
+			produtos_revistas << revistas_nome << endl;
+			produtos_revistas << revistas_quantidade << endl;
+			produtos_revistas << revistas_preco << endl;
+			produtos_revistas << revistas_genero << endl;
+			produtos_revistas << revistas_edicao << endl;
+			produtos_revistas << revistas_publicador << endl;
+			produtos_revistas << blank_line << endl; 
+			
+		}
+		produtos_revistas.close();
+	}
+	void salvarProdutos()
+	{
+		salvarProdutosDiversos();
+		salvarLivros();
+		salvarRevistas();
+	}
+	void salvarFuncionarios()
+	{
+		ofstream funcionarios;
+		funcionarios.open("funcionarios.txt");
+		int size = cadastroFuncionario_.size();
+
+		for(int i = 0; i < size; i++)
+		{
+			ostringstream os_nome,os_rua,os_numero,os_bairro,os_cep,os_telefone,os_cpf,os_rg, os_data, os_salario;
+			os_nome << "Nome: " << cadastroFuncionario_[i].obterPessoaNome();
+			os_rua << "Rua: " << cadastroFuncionario_[i].obterPessoaEndereco().obterRua();
+			os_numero << "Número: " << cadastroFuncionario_[i].obterPessoaEndereco().obterNumero();
+			os_bairro << "Bairro: " << cadastroFuncionario_[i].obterPessoaEndereco().obterBairro();
+			os_cep << "CEP: " << cadastroFuncionario_[i].obterPessoaEndereco().obterCEP();
+			os_telefone << "Telefone: " << cadastroFuncionario_[i].obterPessoaTelefone().obterTelefone();
+			os_cpf << "CPF: " << cadastroFuncionario_[i].obterCPF().obterCPF();
+			os_rg << "RG: " << cadastroFuncionario_[i].obterRG().obterRG();
+			os_data << "Data de Contratação: " << cadastroFuncionario_[i].obterData().obterData();
+			os_salario << "Salário: R$ " << cadastroFuncionario_[i].obterSalario();
+
+			string nome, rua, numero, bairro, cep, telefone, cpf, rg, data, salario;
+			string blank_line = "";
+			nome = os_nome.str();
+			rua = os_rua.str();
+			numero = os_numero.str();
+			bairro = os_bairro.str();
+			cep = os_cep.str();
+			telefone = os_telefone.str();
+			cpf = os_cpf.str();
+			rg = os_rg.str();
+			data = os_data.str();
+			salario = os_salario.str();
+
+			
+
+			funcionarios << nome << endl;
+			funcionarios << rua << endl;
+			funcionarios << numero << endl;
+			funcionarios << bairro << endl;
+			funcionarios << cep << endl;
+			funcionarios << telefone << endl;
+			funcionarios << cpf << endl;
+			funcionarios << rg << endl;
+			funcionarios << data << endl;
+			funcionarios << salario << endl;
+			funcionarios << blank_line << endl; 
+			
+		}
+		funcionarios.close();
+	}
+	void inicalizarTudo()
+	{
+		inicializarFuncionarios();
+		inicializarProdutos();
+		inicializarClientesF();
+		inicializarClientesJ();
+	}
+	void salvarBancoDeDados()
+	{
+		salvarClientes();
+		salvarProdutos();
+		salvarFuncionarios();
+		
+	}
 
 private:
 	deque<Produto> stockProdutos_;
+	deque<Livro> stockLivros_;
+	deque<Revista> stockRevistas_;
 	deque<Cliente_fisico> cadastroClienteF_;
 	deque<Cliente_juridico> cadastroClienteJ_;
 	deque<Funcionario> cadastroFuncionario_;
@@ -805,6 +1381,7 @@ private:
 
 int main(){
 	Gerente g;
-	g.inicializarFuncionarios();
-	g.mostrarCadastroFuncionarios();
+	g.inicalizarTudo();
+	g.mostrarCadastroClientesF();
+	g.salvarBancoDeDados();
 };

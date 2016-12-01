@@ -7,4 +7,16 @@ Telefone: I just want peace
 CPF: Why must it be so?
 RG: I don't understand
 Data de Contratação: 21/06/1996
-Salário: R$666.66
+Salário: R$ 666.66
+
+Nome: a
+Rua: b
+Número: c
+Bairro: d
+CEP: e
+Telefone: f
+CPF: g
+RG: h
+Data de Contratação: 21/06/1996
+Salário: R$ 666.66
+

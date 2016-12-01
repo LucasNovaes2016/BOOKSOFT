@@ -1,0 +1,17 @@
+Nome: a
+Rua: b
+Número: c
+Bairro: d
+CEP: e
+Telefone: f
+CPF: g
+RG: h
+
+Nome: i
+Rua: j
+Número: k
+Bairro: l
+CEP: m
+Telefone: n
+CPF: o
+RG: p

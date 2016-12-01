@@ -1,0 +1,9 @@
+Nome: z
+Rua: x
+Número: y
+Bairro: k
+CEP: l
+Telefone: p
+CNPJ: q
+Razão Social: m
+

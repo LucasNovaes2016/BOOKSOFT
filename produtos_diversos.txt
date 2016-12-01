@@ -1,3 +1,4 @@
 Nome: Café
 Quantidade: 7
-Preço: R$2.0
+Preço: R$2
+
